@@ -1,0 +1,14 @@
+Hypertext Transfer Protocol -- HTTP/1.0
+http://www.ietf.org/rfc/rfc1945.txt
+
+(Obsolete) Hypertext Transfer Protocol -- HTTP/1.1
+http://www.ietf.org/rfc/rfc2068.txt
+
+Hypertext Transfer Protocol -- HTTP/1.1
+http://www.ietf.org/rfc/rfc2616.txt
+
+Known HTTP Proxy/Caching Problems
+http://www.ietf.org/rfc/rfc3143.txt
+
+Wikipedia - Proxy server
+http://en.wikipedia.org/wiki/Proxy_server
