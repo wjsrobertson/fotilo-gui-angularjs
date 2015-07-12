@@ -3,22 +3,17 @@ package net.xylophones.fotilo.io;
 import org.apache.http.*;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.DefaultBHttpServerConnection;
 import org.apache.http.impl.DefaultBHttpServerConnectionFactory;
 import org.apache.http.protocol.*;
 import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.SSLServerSocketFactory;
-import java.io.File;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URLDecoder;
-import java.nio.charset.Charset;
 import java.util.Locale;
 
 import static net.xylophones.fotilo.io.ServerHelper.getSslServerSocketFactory;
@@ -79,7 +74,7 @@ public class ElementalHttpServer {
 
             // InputStreamEntity
 
-            CameraConnection connection = new CameraConnection("192.168.1.6", 443, "admin", "admin123");
+            CameraControl connection = new CameraControl("192.168.1.6", 443, "admin", "admin123");
             CloseableHttpResponse cameraResponse = connection.getVideoStream();
 
             response.setStatusCode(HttpStatus.SC_OK);

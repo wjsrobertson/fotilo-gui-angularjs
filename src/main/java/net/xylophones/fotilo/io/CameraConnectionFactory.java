@@ -10,29 +10,29 @@ import java.util.concurrent.ExecutionException;
 @Component
 public class CameraConnectionFactory {
 
-    private LoadingCache<String, CameraConnection> connections = CacheBuilder.newBuilder()
+    private LoadingCache<String, CameraControl> connections = CacheBuilder.newBuilder()
             .build(
-                    new CacheLoader<String, CameraConnection>() {
-                        public CameraConnection load(String key) {
+                    new CacheLoader<String, CameraControl>() {
+                        public CameraControl load(String key) {
                             return createCameraConnection(key);
                         }
                     }
             );
 
-    private CameraConnection createCameraConnection(String cameraId) {
+    private CameraControl createCameraConnection(String cameraId) {
         switch (cameraId) {
             case "side":
-                return new CameraConnection("192.168.1.139", 81, "admin", "");
+                return new CameraControl("192.168.1.139", 81, "admin", "");
             case "front":
-                return new CameraConnection("192.168.1.6", 81, "admin", "admin123");
+                return new CameraControl("192.168.1.6", 81, "admin", "admin123");
             case "inside":
-                return new CameraConnection("192.168.1.7", 7777, "admin", "admin");
+                return new CameraControl("192.168.1.7", 7777, "admin", "admin");
         }
 
         return null;
     }
 
-    public CameraConnection getCameraConnection(String cameraId) {
+    public CameraControl getCameraConnection(String cameraId) {
         try {
             return connections.get(cameraId);
         } catch (ExecutionException e) {
