@@ -2,10 +2,9 @@ package net.xylophones.fotilo.io.streams;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListSet;
-
-import static com.google.common.collect.Maps.newHashMap;
 
 /**
  *
@@ -17,7 +16,7 @@ public class MultipleOutputStream extends OutputStream {
     private static final ThreadLocal<Map<OutputStream, IOException>> exceptions = new ThreadLocal<Map<OutputStream, IOException>>() {
         @Override
         protected Map<OutputStream, IOException> initialValue() {
-            return newHashMap();
+            return new HashMap<>();
         }
     };
 

@@ -12,13 +12,12 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
-import java.io.Closeable;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
-import static com.google.common.collect.Maps.newHashMap;
 import static org.apache.http.client.utils.HttpClientUtils.closeQuietly;
 
 /**
@@ -31,7 +30,7 @@ import static org.apache.http.client.utils.HttpClientUtils.closeQuietly;
  */
 public class CameraControl implements AutoCloseable {
 
-    private static Map<Direction, Integer> DIRECTION_COMMANDS = newHashMap();
+    private static Map<Direction, Integer> DIRECTION_COMMANDS = new HashMap<>();
 
     static {
         DIRECTION_COMMANDS.put(Direction.UP, 0);
