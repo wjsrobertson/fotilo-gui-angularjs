@@ -44,16 +44,16 @@ public class CommandLineClient {
     }
 
     private void processCommandLine(CommandLine cmd) {
-        if (cmd.hasOption("h") || (! cmd.hasOption("c") && ! cmd.hasOption("i"))) {
+        if (cmd.hasOption("help") || (! cmd.hasOption("command") && ! cmd.hasOption("interactive"))) {
             printHelp();
             return;
         } else {
             CameraInfo cameraInfo = getCamerainfo(cmd);
             try (CameraControl control = new CameraControl(cameraInfo)) {
-                String command = cmd.getOptionValue("c");
+                String command = cmd.getOptionValue("command");
                 Direction direction = Direction.fromString(command);
                 control.move(direction);
-                String timeString = cmd.getOptionValue("t");
+                String timeString = cmd.getOptionValue("time");
                 Integer timeInSeconds = Integer.valueOf(timeString);
                 try {
                     Thread.sleep(1000 * timeInSeconds);
@@ -74,12 +74,13 @@ public class CommandLineClient {
     private CameraInfo getCamerainfo(CommandLine cmd) {
         CameraInfo info = new CameraInfo();
 
-        String configFilename = cmd.getOptionValue("f");
+        String configFilename = cmd.getOptionValue("file");
 
         if (configFilename == null) {
-            info.setPassword(cmd.getOptionValue("p"));
-            info.setHost(cmd.getOptionValue("H"));
-            info.setPort(Integer.valueOf(cmd.getOptionValue("p"))); // TODO
+            info.setUsername(cmd.getOptionValue("username"));
+            info.setPassword(cmd.getOptionValue("password"));
+            info.setHost(cmd.getOptionValue("host"));
+            info.setPort(Integer.valueOf(cmd.getOptionValue("port"))); // TODO
         }
 
         return info;

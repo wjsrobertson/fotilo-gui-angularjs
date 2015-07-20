@@ -10,63 +10,63 @@ public class OptionsFactory {
     public Options createOptions() {
         Option help = Option.builder()
                 .hasArg(false)
-                .argName("h")
+                .argName("help")
                 .longOpt("help")
                 .desc("print help and exit")
                 .build();
 
         Option file = Option.builder()
                 .hasArg()
-                .argName("f")
+                .argName("file")
                 .longOpt("file")
                 .desc("config properties file with camera information. This is an alternative to specifying user, pass, host, port at the command line.")
                 .build();
 
         Option command = Option.builder()
                 .hasArg()
-                .argName("c")
+                .argName("command")
                 .longOpt("command")
                 .desc("command to execute")
                 .build();
 
         Option time = Option.builder()
                 .hasArg()
-                .argName("t")
+                .argName("time")
                 .longOpt("time")
                 .desc("time to execute command for. Used in conjunction with command (c) argument")
                 .build();
 
         Option interactive = Option.builder()
                 .hasArg(false)
-                .argName("i")
+                .argName("interactive")
                 .longOpt("interactive")
                 .desc("run in interactive mode")
                 .build();
 
         Option host = Option.builder()
                 .hasArg()
-                .argName("H")
+                .argName("host")
                 .longOpt("host")
                 .desc("host/IP of camera")
                 .build();
 
         Option port = Option.builder()
                 .hasArg()
-                .argName("p") // lower case p
+                .argName("port") // lower case p
                 .longOpt("port")
                 .desc("port of camera")
                 .build();
 
         Option username = Option.builder()
                 .hasArg()
-                .argName("u")
+                .argName("username")
                 .longOpt("username")
                 .desc("username for camera authentication")
                 .build();
 
         Option password = Option.builder()
                 .hasArg()
-                .argName("P") // upper case p
+                .argName("password") // upper case p
                 .longOpt("password")
                 .desc("username for camera authentication")
                 .build();

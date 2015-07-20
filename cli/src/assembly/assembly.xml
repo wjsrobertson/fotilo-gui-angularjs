@@ -6,23 +6,10 @@
         <format>tar.gz</format>
     </formats>
 
-    <dependencySets>
-        <dependencySet>
-            <!--
-                Project artifact is not copied under library directory since
-                it is added to the root directory of the zip package.
-            -->
-            <useProjectArtifact>false</useProjectArtifact>
-            <scope>runtime</scope>
-            <outputDirectory>lib</outputDirectory>
-            <unpack>false</unpack>
-        </dependencySet>
-    </dependencySets>
-
     <fileSets>
         <fileSet>
             <directory>src/bin</directory>
-            <outputDirectory>bin</outputDirectory>
+            <outputDirectory></outputDirectory>
             <includes>
                 <include>*.sh</include>
                 <include>*.bat</include>
@@ -30,10 +17,18 @@
         </fileSet>
 
         <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+            <includes>
+                <include>log4j.xml</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
             <directory>target</directory>
             <outputDirectory>lib</outputDirectory>
             <includes>
-                <include>*.jar</include>
+                <include>${shaded.jar.name}.jar</include>
             </includes>
         </fileSet>
     </fileSets>
