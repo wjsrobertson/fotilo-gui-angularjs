@@ -1,5 +1,6 @@
 package net.xylophones.fotilo.io;
 
+import net.xylophones.fotilo.CameraControl;
 import net.xylophones.fotilo.common.CameraInfo;
 import net.xylophones.fotilo.common.Direction;
 import org.apache.commons.io.IOUtils;
@@ -20,15 +21,7 @@ import java.util.Map;
 
 import static org.apache.http.client.utils.HttpClientUtils.closeQuietly;
 
-/**
- * TODO - use response handling instead
- * <p/>
- * http://hc.apache.org/httpcomponents-client-4.4.x/httpclient/examples/org/apache/http/examples/client/ClientWithResponseHandler.java
- * <p/>
- * JPT3815W
- * TR3818
- */
-public class CameraControl implements AutoCloseable {
+public class TR3818CameraControl implements CameraControl, AutoCloseable {
 
     private static Map<Direction, Integer> DIRECTION_COMMANDS = new HashMap<>();
 
@@ -52,11 +45,11 @@ public class CameraControl implements AutoCloseable {
     private final String user;
     private final String pass;
 
-    public CameraControl(CameraInfo cameraInfo) {
+    public TR3818CameraControl(CameraInfo cameraInfo) {
         this(cameraInfo.getHost(), cameraInfo.getPort(), cameraInfo.getUsername(), cameraInfo.getPassword());
     }
 
-    public CameraControl(String host, int port, String user, String pass) {
+    public TR3818CameraControl(String host, int port, String user, String pass) {
         this.host = host;
         this.port = port;
         this.user = user;

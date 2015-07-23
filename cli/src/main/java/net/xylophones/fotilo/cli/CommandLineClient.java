@@ -2,7 +2,8 @@ package net.xylophones.fotilo.cli;
 
 import net.xylophones.fotilo.common.CameraInfo;
 import net.xylophones.fotilo.common.Direction;
-import net.xylophones.fotilo.io.CameraControl;
+import net.xylophones.fotilo.io.JPT3815WCameraControl;
+import net.xylophones.fotilo.io.TR3818CameraControl;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class CommandLineClient {
             return;
         } else {
             CameraInfo cameraInfo = getCamerainfo(cmd);
-            try (CameraControl control = new CameraControl(cameraInfo)) {
+            try (JPT3815WCameraControl control = new JPT3815WCameraControl(cameraInfo)) {
                 String command = cmd.getOptionValue("command");
                 Direction direction = Direction.fromString(command);
                 control.move(direction);
@@ -60,6 +61,7 @@ public class CommandLineClient {
                 } catch (InterruptedException e) {
                     consolePrintWriter.println("Interrupted - exiting");
                 }
+                control.stopMovement();
             } catch (IOException ioe) {
                 consolePrintWriter.println("Problem - exiting: " + ioe.getMessage());
             }

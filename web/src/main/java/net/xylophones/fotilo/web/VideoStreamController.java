@@ -1,6 +1,6 @@
 package net.xylophones.fotilo.web;
 
-import net.xylophones.fotilo.io.CameraControl;
+import net.xylophones.fotilo.io.TR3818CameraControl;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.InputStreamEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ public class VideoStreamController {
 
     @RequestMapping("/stream")
     public void streamVideo(@RequestParam("camera") String cameraId, OutputStream outputStream, HttpServletResponse response) throws IOException {
-        CameraControl cameraControl = cameraConnectionFactory.getCameraConnection(cameraId);
-        CloseableHttpResponse cameraResponse = cameraControl.getVideoStream();
+        TR3818CameraControl TR3818CameraControl = cameraConnectionFactory.getCameraConnection(cameraId);
+        CloseableHttpResponse cameraResponse = TR3818CameraControl.getVideoStream();
 
         try {
             String contentTypeValue = cameraResponse.getFirstHeader(CONTENT_TYPE).getValue();

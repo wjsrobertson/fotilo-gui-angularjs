@@ -52,7 +52,7 @@ public class OptionsFactory {
 
         Option port = Option.builder()
                 .hasArg()
-                .argName("port") // lower case p
+                .argName("port")
                 .longOpt("port")
                 .desc("port of camera")
                 .build();
@@ -66,9 +66,16 @@ public class OptionsFactory {
 
         Option password = Option.builder()
                 .hasArg()
-                .argName("password") // upper case p
+                .argName("password")
                 .longOpt("password")
                 .desc("username for camera authentication")
+                .build();
+
+        Option jpg = Option.builder()
+                .hasArg()
+                .argName("jpg")
+                .longOpt("jpg")
+                .desc("jpg")
                 .build();
 
         return buildOptions(help, file, command, time, interactive, host, port, username, password);

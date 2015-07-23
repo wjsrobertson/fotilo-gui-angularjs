@@ -74,7 +74,7 @@ public class ElementalHttpServer {
 
             // InputStreamEntity
 
-            CameraControl connection = new CameraControl("192.168.1.6", 443, "admin", "admin123");
+            TR3818CameraControl connection = new TR3818CameraControl("192.168.1.6", 443, "admin", "admin123");
             CloseableHttpResponse cameraResponse = connection.getVideoStream();
 
             response.setStatusCode(HttpStatus.SC_OK);
