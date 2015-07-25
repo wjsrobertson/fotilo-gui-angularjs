@@ -3,6 +3,7 @@ package net.xylophones.fotilo.io;
 import net.xylophones.fotilo.CameraControl;
 import net.xylophones.fotilo.common.CameraInfo;
 import net.xylophones.fotilo.common.Direction;
+import net.xylophones.fotilo.common.Rotation;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static net.xylophones.fotilo.InputValidationUtil.checkWithinRange;
 import static org.apache.http.client.utils.HttpClientUtils.closeQuietly;
 
 public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
@@ -44,9 +46,14 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
         DIRECTION_VALUES.put(Direction.RIGHT, 3);
     }
 
+    private static final int COMMAND_SPEED = 1;
     private static final int COMMAND_START = 2;
-
     private static final int COMMAND_STOP = 3;
+    private static final int COMMAND_SET_CONTRAST = 5;
+    private static final int COMMAND_SET_BRIGHTNESS = 6;
+    private static final int COMMAND_SET_LOCATION = 11;
+
+
 
     private static final int STATUS_CODE_SUCCESS = 200;
 
@@ -100,6 +107,53 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
         return httpclient.execute(httpGet);
     }
 
+    @Override
+    public void setPanTiltSpeed(int speed) throws IOException {
+        checkWithinRange("speed not within range", speed, 1, 10);
+        executeCommand(COMMAND_SPEED, speed);
+    }
+
+    @Override
+    public void setBrightness(int brightness) throws IOException {
+        checkWithinRange("brightness not within range", brightness, 0, 255);
+        executeCommand(COMMAND_SET_BRIGHTNESS, brightness);
+    }
+
+    @Override
+    public void setContrast(int contrast) throws IOException {
+        checkWithinRange("contrast not within range", contrast, 0, 5);
+        executeCommand(COMMAND_SET_CONTRAST, contrast);
+    }
+
+    @Override
+    public void setResolution(String resolution) {
+        // 7
+    }
+
+    @Override
+    public void flip(Rotation rotation) {
+        // 9
+        // 23 = vertical
+        // 13 = horizontal
+    }
+
+    @Override
+    public void storePreset(int location) throws IOException {
+        checkWithinRange("location not within range", location, 1, 16);
+        executeCommand(COMMAND_SET_LOCATION, location);
+    }
+
+    @Override
+    public void gotoPreset(int location) {
+        // 13
+    }
+
+    @Override
+    public void setFrameRate(int fps) {
+        // 8
+    }
+
+    @Override
     public void saveSnapshot(Path path) throws IOException {
         String snapshotUrl = String.format(SNAPSHOT_URL, cameraInfo.getHost(), cameraInfo.getPort());
         HttpGet httpget = new HttpGet(snapshotUrl);
@@ -134,4 +188,6 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
     public void close() {
         closeQuietly(httpclient);
     }
+
+
 }

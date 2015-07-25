@@ -3,6 +3,7 @@ package net.xylophones.fotilo.io;
 import net.xylophones.fotilo.CameraControl;
 import net.xylophones.fotilo.common.CameraInfo;
 import net.xylophones.fotilo.common.Direction;
+import net.xylophones.fotilo.common.Rotation;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -78,6 +79,46 @@ public class TR3818CameraControl implements CameraControl, AutoCloseable {
         HttpGet httpget = new HttpGet(uri);
 
         return httpclient.execute(httpget);
+    }
+
+    @Override
+    public void setPanTiltSpeed(int speed) throws IOException {
+
+    }
+
+    @Override
+    public void setBrightness(int brightness) throws IOException {
+
+    }
+
+    @Override
+    public void setContrast(int contrast) throws IOException {
+
+    }
+
+    @Override
+    public void setResolution(String resolution) throws IOException {
+
+    }
+
+    @Override
+    public void flip(Rotation rotation) throws IOException {
+
+    }
+
+    @Override
+    public void storePreset(int location) throws IOException {
+
+    }
+
+    @Override
+    public void gotoPreset(int location) throws IOException {
+
+    }
+
+    @Override
+    public void setFrameRate(int fps) throws IOException {
+
     }
 
     public void saveSnapshot(Path path) throws IOException {

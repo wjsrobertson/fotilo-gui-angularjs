@@ -30,12 +30,12 @@ stop      3 8
 
 snapshot: http://192.168.1.3:7777/cgi-bin/snapshot.cgi
 
-
 set 30 FPS: http://192.168.1.3:7777/cgi-bin/control.cgi?action=cmd&code=8&value=30
 
 pan tilt fastest: http://192.168.1.3:7777/cgi-bin/control.cgi?action=cmd&code=1&value=0
 pan tilt normal:  http://192.168.1.3:7777/cgi-bin/control.cgi?action=cmd&code=1&value=4
 pan tilt slowest: http://192.168.1.3:7777/cgi-bin/control.cgi?action=cmd&code=1&value=10
+
 set brightness to 100 (0-255): http://192.168.1.3:7777/cgi-bin/control.cgi?action=cmd&code=6&value=100
 set contrast to 5 (0-5): http://192.168.1.3:7777/cgi-bin/control.cgi?action=cmd&code=5&value=5
 red 640x480: http://192.168.1.3:7777/cgi-bin/control.cgi?action=cmd&code=7&value=41943520
