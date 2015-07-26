@@ -9,16 +9,16 @@ public class CommandLineOptions {
     private boolean interactive;
     private String file;
     private Direction direction;
-    private String time;
+    private Integer time;
     private String host;
-    private String port;
+    private Integer port;
     private String username;
     private String password;
     private String image;
     private Integer speed;
     private Integer brightness;
     private Integer contrast;
-    private Integer resolution;
+    private String resolution;
     private Rotation flipRotation;
     private Integer store;
     private Integer goTo;
@@ -56,11 +56,11 @@ public class CommandLineOptions {
         this.direction = direction;
     }
 
-    public String getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
@@ -72,11 +72,11 @@ public class CommandLineOptions {
         this.host = host;
     }
 
-    public String getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    public void setPort(String port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 
@@ -128,11 +128,11 @@ public class CommandLineOptions {
         this.contrast = contrast;
     }
 
-    public Integer getResolution() {
+    public String getResolution() {
         return resolution;
     }
 
-    public void setResolution(Integer resolution) {
+    public void setResolution(String resolution) {
         this.resolution = resolution;
     }
 

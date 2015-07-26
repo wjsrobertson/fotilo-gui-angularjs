@@ -1,5 +1,7 @@
 package net.xylophones.fotilo.common;
 
+import static org.apache.http.util.TextUtils.isEmpty;
+
 public enum Direction {
 
     UP,
@@ -12,7 +14,7 @@ public enum Direction {
     RIGHT;
 
     public static Direction fromString(String string) {
-        if (string == null) {
+        if (isEmpty(string)) {
             return null;
         }
 

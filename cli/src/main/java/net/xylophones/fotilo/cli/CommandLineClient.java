@@ -1,84 +1,103 @@
 package net.xylophones.fotilo.cli;
 
 import net.xylophones.fotilo.common.CameraInfo;
-import net.xylophones.fotilo.common.Direction;
 import net.xylophones.fotilo.io.JPT3815WCameraControl;
-import net.xylophones.fotilo.io.TR3818CameraControl;
-import org.apache.commons.lang.SystemUtils;
-import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 
 @Component
 public class CommandLineClient {
-
-    private static final String APP_COMMAND_WINDOWS = "fotilo.bat";
-
-    private static final String APP_COMMAND_NON_WINDOWS = "fotilo.sh";
 
     @Autowired
     private PrintWriter consolePrintWriter;
 
     @Autowired
-    private HelpFormatter helpFormatter;
+    private CommandLineArgumentsParser parser;
+
+    @Autowired
+    private HelpPrinter helpPrinter;
 
     public void execute(String[] commandLineArguments) {
-        CommandLineParser parser = new DefaultParser();
+        CommandLineOptions commandLineOptions = parser.parseCommandLineArguments(commandLineArguments);
 
-        try {
-            processCommandLine(commandLine);
-
-        } catch (ParseException e) {
-            consolePrintWriter.println(e.getMessage());
-            printHelp();
+        if (commandLineOptions == null) {
+            helpPrinter.printHelp();
+            return;
         }
+
+        processCommandLine(commandLineOptions);
     }
 
-    private void processCommandLine(CommandLine cmd) {
-        if (cmd.hasOption("help") || (! cmd.hasOption("command") && ! cmd.hasOption("interactive"))) {
-            printHelp();
+    private void processCommandLine(CommandLineOptions options) {
+        if (options.isHelp() || (options.getDirection() == null)) {
+            helpPrinter.printHelp();
             return;
         } else {
-            CameraInfo cameraInfo = getCamerainfo(cmd);
+            CameraInfo cameraInfo = getCameraInfo(options);
             try (JPT3815WCameraControl control = new JPT3815WCameraControl(cameraInfo)) {
-                String command = cmd.getOptionValue("direction");
-                Direction direction = Direction.fromString(command);
-                control.move(direction);
-                String timeString = cmd.getOptionValue("time");
-                Integer timeInSeconds = Integer.valueOf(timeString);
-                try {
-                    Thread.sleep(1000 * timeInSeconds);
-                } catch (InterruptedException e) {
-                    consolePrintWriter.println("Interrupted - exiting");
+
+                if (options.getImage() != null) {
+                    control.saveSnapshot(Paths.get(options.getImage()));
                 }
-                control.stopMovement();
+                if (options.getSpeed() != null) {
+                    control.setPanTiltSpeed(options.getSpeed());
+                }
+                if (options.getBrightness() != null) {
+                    control.setBrightness(options.getBrightness());
+                }
+                if (options.getContrast() != null) {
+                    control.setContrast(options.getContrast());
+                }
+                if (options.getFps() != null) {
+                    control.setFrameRate(options.getFps());
+                }
+                if (options.getFlipRotation() != null) {
+                    control.flip(options.getFlipRotation());
+                }
+                if (options.getResolution() != null) {
+                    control.setResolution(options.getResolution());
+                }
+                if (options.getStore() != null) {
+                    control.storePreset(options.getStore());
+                }
+                if (options.getGoTo() != null) {
+                    control.gotoPreset(options.getGoTo());
+                }
+                if (options.getDirection() != null) {
+                    control.move(options.getDirection());
+                    if (options.getTime() != null) {
+                        Integer timeInSeconds = options.getTime();
+                        try {
+                            Thread.sleep(1000 * timeInSeconds);
+                        } catch (InterruptedException e) {
+                            consolePrintWriter.println("Interrupted - exiting");
+                        }
+
+                        control.stopMovement();
+                    }
+                }
             } catch (IOException ioe) {
                 consolePrintWriter.println("Problem - exiting: " + ioe.getMessage());
             }
         }
     }
 
-    private void printHelp() {
-        String command = SystemUtils.IS_OS_WINDOWS ? APP_COMMAND_WINDOWS : APP_COMMAND_NON_WINDOWS;
-        helpFormatter.printHelp( consolePrintWriter, 80, command, "", options, 4, 8, "" );
-    }
-
-    private CameraInfo getCamerainfo(CommandLine cmd) {
+    private CameraInfo getCameraInfo(CommandLineOptions options) {
         CameraInfo info = new CameraInfo();
 
-        String configFilename = cmd.getOptionValue("file");
+        String configFilename = options.getFile();
 
         if (configFilename == null) {
-            info.setUsername(cmd.getOptionValue("username"));
-            info.setPassword(cmd.getOptionValue("password"));
-            info.setHost(cmd.getOptionValue("host"));
-            info.setPort(Integer.valueOf(cmd.getOptionValue("port"))); // TODO
+            info.setUsername(options.getUsername());
+            info.setPassword(options.getPassword());
+            info.setHost(options.getHost());
+            info.setPort(options.getPort());
         }
 
         return info;
     }
-
 }
