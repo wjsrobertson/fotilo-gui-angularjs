@@ -10,4 +10,4 @@
  )
  set FOTILO_CP=!FOTILO_CP!
 
-java %FOTILO_JAVA_OPTS% -cp "%FOTILO_CP%;%FOTILO_HOME%\conf" net.xylophones.fotilo.cli.CommandLineApp %ARGS%
+java -client -Xms64m -Xmx64m %FOTILO_JAVA_OPTS% -cp "%FOTILO_CP%;%FOTILO_HOME%\conf" net.xylophones.fotilo.cli.CommandLineApp %ARGS%

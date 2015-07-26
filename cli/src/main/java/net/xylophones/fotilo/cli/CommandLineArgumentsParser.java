@@ -78,7 +78,7 @@ public class CommandLineArgumentsParser {
         options.setFlipRotation(Rotation.fromString(flip));
 
         String storeLocation = commandLine.getOptionValue(STORE_LOCATION.getArgName());
-        options.setStore(Integer.parseInt(storeLocation));
+        options.setStore(resolveInt(storeLocation));
 
         String gotoLocation = commandLine.getOptionValue(GOTO_LOCATION.getArgName());
         options.setGoTo(resolveInt(gotoLocation));
@@ -102,7 +102,7 @@ public class CommandLineArgumentsParser {
             return Boolean.valueOf(toResolve);
         }
 
-        return null;
+        return false;
     }
 
     private String resolveString(String toResolve) {

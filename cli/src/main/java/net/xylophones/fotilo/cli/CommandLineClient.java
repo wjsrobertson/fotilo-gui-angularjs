@@ -75,6 +75,7 @@ public class CommandLineClient {
                             Thread.sleep(1000 * timeInSeconds);
                         } catch (InterruptedException e) {
                             consolePrintWriter.println("Interrupted - exiting");
+                            return;
                         }
 
                         control.stopMovement();
