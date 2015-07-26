@@ -20,13 +20,7 @@ public class CommandLineClient {
     private static final String APP_COMMAND_NON_WINDOWS = "fotilo.sh";
 
     @Autowired
-    private Options options;
-
-    @Autowired
     private PrintWriter consolePrintWriter;
-
-    @Autowired
-    private CommandLineParser commandLineParser;
 
     @Autowired
     private HelpFormatter helpFormatter;
@@ -35,7 +29,6 @@ public class CommandLineClient {
         CommandLineParser parser = new DefaultParser();
 
         try {
-            CommandLine commandLine = parser.parse(options, commandLineArguments);
             processCommandLine(commandLine);
 
         } catch (ParseException e) {
@@ -51,7 +44,7 @@ public class CommandLineClient {
         } else {
             CameraInfo cameraInfo = getCamerainfo(cmd);
             try (JPT3815WCameraControl control = new JPT3815WCameraControl(cameraInfo)) {
-                String command = cmd.getOptionValue("command");
+                String command = cmd.getOptionValue("direction");
                 Direction direction = Direction.fromString(command);
                 control.move(direction);
                 String timeString = cmd.getOptionValue("time");

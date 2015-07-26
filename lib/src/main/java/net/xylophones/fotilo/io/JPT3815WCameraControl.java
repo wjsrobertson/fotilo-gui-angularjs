@@ -51,9 +51,14 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
     private static final int COMMAND_STOP = 3;
     private static final int COMMAND_SET_CONTRAST = 5;
     private static final int COMMAND_SET_BRIGHTNESS = 6;
+    private static final int COMMAND_RESOLUTION = 7;
+    private static final int COMMAND_FRAME_RATE = 8;
+    private static final int COMMAND_ROTATION = 9;
     private static final int COMMAND_SET_LOCATION = 11;
+    private static final int COMMAND_GOTO_LOCATION = 13;
 
-
+    private static final int VALUE_ROTATION_VERTICAL = 23;
+    private static final int VALUE_ROTATION_HORIZONTAL = 13;
 
     private static final int STATUS_CODE_SUCCESS = 200;
 
@@ -126,15 +131,29 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
     }
 
     @Override
-    public void setResolution(String resolution) {
-        // 7
+    public void setResolution(String resolution) throws IOException {
+        int resolutionValue = 10485880; // "160x120"
+        switch (resolution) {
+            case "320x240":
+                resolutionValue = 20971760;
+                break;
+            case "640x480":
+                resolutionValue = 41943520;
+                break;
+        }
+
+        executeCommand(COMMAND_RESOLUTION, resolutionValue);
     }
 
     @Override
-    public void flip(Rotation rotation) {
-        // 9
-        // 23 = vertical
-        // 13 = horizontal
+    public void flip(Rotation rotation) throws IOException {
+        if (Rotation.HORIZONTAL.equals(rotation)) {
+            executeCommand(COMMAND_ROTATION, VALUE_ROTATION_VERTICAL);
+        } else if (Rotation.HORIZONTAL.equals(rotation)) {
+            executeCommand(COMMAND_ROTATION, VALUE_ROTATION_HORIZONTAL);
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
@@ -144,13 +163,15 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
     }
 
     @Override
-    public void gotoPreset(int location) {
-        // 13
+    public void gotoPreset(int location) throws IOException {
+        checkWithinRange("frame rate not within range", location, 1, 10);
+        executeCommand(COMMAND_GOTO_LOCATION, location);
     }
 
     @Override
-    public void setFrameRate(int fps) {
-        // 8
+    public void setFrameRate(int fps) throws IOException {
+        checkWithinRange("frame rate not within range", fps, 1, 30);
+        executeCommand(COMMAND_FRAME_RATE, fps);
     }
 
     @Override
