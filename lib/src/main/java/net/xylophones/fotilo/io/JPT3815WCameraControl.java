@@ -1,7 +1,9 @@
 package net.xylophones.fotilo.io;
 
 import net.xylophones.fotilo.CameraControl;
+import net.xylophones.fotilo.ScheduledCameraMovementStopper;
 import net.xylophones.fotilo.common.CameraInfo;
+import net.xylophones.fotilo.common.CameraSettings;
 import net.xylophones.fotilo.common.Direction;
 import net.xylophones.fotilo.common.Rotation;
 import org.apache.commons.io.IOUtils;
@@ -16,6 +18,8 @@ import org.apache.http.impl.client.HttpClients;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +36,8 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
     private static final String ACTION_CONTROL_URL = "http://%s:%s/cgi-bin/control.cgi?action=cmd&code=%s&value=%s";
 
     private static final String MJPEG_URL = "http://%s:%s/vjpeg.v";
+
+    private static final String SETTINGS_PAGE_URL = "http://%s:%s/video/livesp.asp";
 
     private static Map<Direction, Integer> DIRECTION_VALUES = new HashMap<>();
 
@@ -62,7 +68,7 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
 
     private static final int STATUS_CODE_SUCCESS = 200;
 
-    private CameraInfo cameraInfo;
+    private final CameraInfo cameraInfo;
 
     private Lock movementLock = new ReentrantLock();
 
@@ -71,8 +77,18 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
 
     private final CloseableHttpClient httpclient;
 
-    public JPT3815WCameraControl(CameraInfo cameraInfo) {
-        this.cameraInfo = cameraInfo;
+    // TODO - dependency injection
+    private final ScheduledCameraMovementStopper stopper = new ScheduledCameraMovementStopper();
+
+    // TODO - dependency injection
+    private final JPT3815WSettingsPageParser settingsParser = new JPT3815WSettingsPageParser();
+
+    public JPT3815WCameraControl(String host, int port, String user, String pass) {
+        cameraInfo = new CameraInfo();
+        cameraInfo.setHost(host);
+        cameraInfo.setPort(port);
+        cameraInfo.setPassword(pass);
+        cameraInfo.setUsername(user);
 
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
         credsProvider.setCredentials(
@@ -81,6 +97,10 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
         );
 
         httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
+    }
+
+    public JPT3815WCameraControl(CameraInfo cameraInfo) {
+        this(cameraInfo.getHost(), cameraInfo.getPort(), cameraInfo.getUsername(), cameraInfo.getPassword());
     }
 
     public boolean move(Direction direction) throws IOException {
@@ -92,6 +112,12 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
         } finally {
             movementLock.unlock();
         }
+    }
+
+    @Override
+    public void move(Direction direction, int duration) throws IOException {
+        move(direction);
+        stopper.stopMovementAfterTime(this, duration);
     }
 
     public boolean stopMovement() throws IOException {
@@ -210,5 +236,17 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
         closeQuietly(httpclient);
     }
 
+    @Override
+    public CameraSettings getCameraSettings() throws IOException {
+        String settingsPageUrl = String.format(SETTINGS_PAGE_URL, cameraInfo.getHost(), cameraInfo.getPort());
+        HttpGet httpget = new HttpGet(settingsPageUrl);
+        CloseableHttpResponse response = httpclient.execute(httpget);
+        try {
+            InputStream responseStream = response.getEntity().getContent();
+            return settingsParser.parseFromPage(responseStream);
+        } finally {
+            closeQuietly(response);
+        }
+    }
 
 }

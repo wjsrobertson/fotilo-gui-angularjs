@@ -1,5 +1,6 @@
 package net.xylophones.fotilo.common;
 
+// TODO - make immutable
 public class CameraInfo {
 
     private String host;

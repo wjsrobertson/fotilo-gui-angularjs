@@ -1,7 +1,8 @@
-package net.xylophones.fotilo.web;
+package net.xylophones.fotilo.web.controllers;
 
 import net.xylophones.fotilo.CameraControl;
 import net.xylophones.fotilo.io.TR3818CameraControl;
+import net.xylophones.fotilo.web.CameraConnectionFactory;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.InputStreamEntity;
 import org.springframework.beans.factory.annotation.Autowired;

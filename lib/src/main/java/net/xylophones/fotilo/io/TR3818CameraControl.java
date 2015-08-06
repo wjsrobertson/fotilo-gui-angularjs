@@ -2,6 +2,7 @@ package net.xylophones.fotilo.io;
 
 import net.xylophones.fotilo.CameraControl;
 import net.xylophones.fotilo.common.CameraInfo;
+import net.xylophones.fotilo.common.CameraSettings;
 import net.xylophones.fotilo.common.Direction;
 import net.xylophones.fotilo.common.Rotation;
 import org.apache.commons.io.IOUtils;
@@ -69,6 +70,11 @@ public class TR3818CameraControl implements CameraControl, AutoCloseable {
         return executeCommand(command);
     }
 
+    @Override
+    public void move(Direction direction, int duration) throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
     public boolean stopMovement() throws IOException {
         return executeCommand(COMMAND_STOP);
     }
@@ -119,6 +125,11 @@ public class TR3818CameraControl implements CameraControl, AutoCloseable {
     @Override
     public void setFrameRate(int fps) throws IOException {
 
+    }
+
+    @Override
+    public CameraSettings getCameraSettings() throws IOException {
+        throw new UnsupportedOperationException();
     }
 
     public void saveSnapshot(Path path) throws IOException {

@@ -4,6 +4,8 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import net.xylophones.fotilo.CameraControl;
+import net.xylophones.fotilo.ScheduledCameraMovementStopper;
+import net.xylophones.fotilo.io.JPT3815WCameraControl;
 import net.xylophones.fotilo.io.TR3818CameraControl;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +30,7 @@ public class CameraConnectionFactory {
             case "front":
                 return new TR3818CameraControl("192.168.1.5", 81, "admin", "admin123");
             case "inside":
-                return new TR3818CameraControl("192.168.1.3", 7777, "admin", "admin");
+                return new JPT3815WCameraControl("192.168.1.3", 7777, "admin", "admin");
         }
 
         return null;

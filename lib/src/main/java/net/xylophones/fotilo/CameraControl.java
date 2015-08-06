@@ -1,5 +1,6 @@
 package net.xylophones.fotilo;
 
+import net.xylophones.fotilo.common.CameraSettings;
 import net.xylophones.fotilo.common.Direction;
 import net.xylophones.fotilo.common.Rotation;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -10,6 +11,8 @@ import java.nio.file.Path;
 public interface CameraControl {
 
     boolean move(Direction direction) throws IOException;
+
+    void move(Direction direction, int duration) throws IOException;
 
     boolean stopMovement() throws IOException;
 
@@ -32,5 +35,7 @@ public interface CameraControl {
     void gotoPreset(int location) throws IOException;
 
     void setFrameRate(int fps) throws IOException;
+
+    CameraSettings getCameraSettings() throws IOException;
 
 }
