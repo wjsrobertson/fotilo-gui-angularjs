@@ -2,10 +2,7 @@ package net.xylophones.fotilo.io;
 
 import net.xylophones.fotilo.CameraControl;
 import net.xylophones.fotilo.ScheduledCameraMovementStopper;
-import net.xylophones.fotilo.common.CameraInfo;
-import net.xylophones.fotilo.common.CameraSettings;
-import net.xylophones.fotilo.common.Direction;
-import net.xylophones.fotilo.common.Rotation;
+import net.xylophones.fotilo.common.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -21,7 +18,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -183,13 +182,13 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
     }
 
     @Override
-    public void storePreset(int location) throws IOException {
+    public void storeLocation(int location) throws IOException {
         checkWithinRange("location not within range", location, 1, 16);
         executeCommand(COMMAND_SET_LOCATION, location);
     }
 
     @Override
-    public void gotoPreset(int location) throws IOException {
+    public void gotoLocation(int location) throws IOException {
         checkWithinRange("frame rate not within range", location, 1, 10);
         executeCommand(COMMAND_GOTO_LOCATION, location);
     }
@@ -247,6 +246,38 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
         } finally {
             closeQuietly(response);
         }
+    }
+
+    public CameraDefinition getCameraDefinition() {
+        // TODO - range values should be set from constants
+        CameraDefinition cameraDefinition = new CameraDefinition();
+
+        cameraDefinition.setCameraType("JPT3815W");
+        cameraDefinition.setCameraManufacturer("Tenvis");
+        cameraDefinition.setBrightnessRange(new SettingsRange(0, 255));
+        cameraDefinition.setContrastRange(new SettingsRange(0, 5));
+        cameraDefinition.setFrameRateRange(new SettingsRange(1, 30));
+        cameraDefinition.setLocationRange(new SettingsRange(1, 10));
+        cameraDefinition.setPanTiltSpeedRange(new SettingsRange(10, 0));
+
+        List<String> resolutions = new ArrayList<>();
+        resolutions.add("160x120");
+        resolutions.add("320x240");
+        resolutions.add("640x480");
+        cameraDefinition.setSupportedResolutions(resolutions);
+
+
+        return cameraDefinition;
+    }
+
+    @Override
+    public CameraOverview getCameraOverview() throws IOException {
+        CameraOverview cameraOverview = new CameraOverview();
+
+        cameraOverview.setDefinition(getCameraDefinition());
+        cameraOverview.setSettings(getCameraSettings());
+
+        return cameraOverview;
     }
 
 }

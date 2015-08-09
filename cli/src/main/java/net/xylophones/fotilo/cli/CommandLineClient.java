@@ -62,10 +62,10 @@ public class CommandLineClient {
                     control.setResolution(options.getResolution());
                 }
                 if (options.getStore() != null) {
-                    control.storePreset(options.getStore());
+                    control.storeLocation(options.getStore());
                 }
                 if (options.getGoTo() != null) {
-                    control.gotoPreset(options.getGoTo());
+                    control.gotoLocation(options.getGoTo());
                 }
                 if (options.getDirection() != null) {
                     control.move(options.getDirection());

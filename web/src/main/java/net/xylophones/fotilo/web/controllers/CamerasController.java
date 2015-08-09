@@ -14,7 +14,7 @@ import java.util.List;
 import static com.google.common.collect.Lists.newArrayList;
 
 @RestController
-@RequestMapping(value = "/cameras", produces = "application/json")
+@RequestMapping(value = "/api/cameras", produces = "application/json")
 public class CamerasController {
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)

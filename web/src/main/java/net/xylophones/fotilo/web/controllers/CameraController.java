@@ -1,10 +1,9 @@
 package net.xylophones.fotilo.web.controllers;
 
 import net.xylophones.fotilo.CameraControl;
-import net.xylophones.fotilo.common.CameraSettings;
+import net.xylophones.fotilo.common.CameraOverview;
 import net.xylophones.fotilo.common.Direction;
 import net.xylophones.fotilo.web.CameraConnectionFactory;
-import net.xylophones.fotilo.web.model.Camera;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.InputStreamEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.apache.http.client.utils.HttpClientUtils.closeQuietly;
 
 @RestController
-@RequestMapping(value = "/camera", produces = "application/json")
+@RequestMapping(value = "/api/camera", produces = "application/json")
 public class CameraController {
 
     private static final String CONTENT_TYPE = "Content-Type";
@@ -67,9 +64,9 @@ public class CameraController {
         }
     }
 
-    @RequestMapping("/{cameraId}/settings")
-    public CameraSettings getSettings(@PathVariable("cameraId") String cameraId) throws IOException {
-        return cameraConnectionFactory.getCameraConnection(cameraId).getCameraSettings();
+    @RequestMapping(value = {"/{cameraId}"}, method = RequestMethod.GET)
+    public CameraOverview getSettings(@PathVariable("cameraId") String cameraId) throws IOException {
+        return cameraConnectionFactory.getCameraConnection(cameraId).getCameraOverview();
     }
 
 }

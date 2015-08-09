@@ -4,13 +4,13 @@ public class CameraSettings {
 
     private Integer frameRate;
 
-    private  Integer brightness;
+    private Integer brightness;
 
-    private  Integer contrast;
+    private Integer contrast;
 
-    private  String resolution;
+    private String resolution;
 
-    private  Integer panTiltSpeed;
+    private Integer panTiltSpeed;
 
     public Integer getFrameRate() {
         return frameRate;

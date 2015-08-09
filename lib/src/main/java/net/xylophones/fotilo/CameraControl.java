@@ -1,8 +1,6 @@
 package net.xylophones.fotilo;
 
-import net.xylophones.fotilo.common.CameraSettings;
-import net.xylophones.fotilo.common.Direction;
-import net.xylophones.fotilo.common.Rotation;
+import net.xylophones.fotilo.common.*;
 import org.apache.http.client.methods.CloseableHttpResponse;
 
 import java.io.IOException;
@@ -30,12 +28,16 @@ public interface CameraControl {
 
     void flip(Rotation rotation) throws IOException;
 
-    void storePreset(int location) throws IOException;
+    void storeLocation(int location) throws IOException;
 
-    void gotoPreset(int location) throws IOException;
+    void gotoLocation(int location) throws IOException;
 
     void setFrameRate(int fps) throws IOException;
 
     CameraSettings getCameraSettings() throws IOException;
+
+    CameraDefinition getCameraDefinition() throws IOException;
+
+    CameraOverview getCameraOverview() throws IOException;
 
 }

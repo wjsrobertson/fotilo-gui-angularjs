@@ -1,10 +1,7 @@
 package net.xylophones.fotilo.io;
 
 import net.xylophones.fotilo.CameraControl;
-import net.xylophones.fotilo.common.CameraInfo;
-import net.xylophones.fotilo.common.CameraSettings;
-import net.xylophones.fotilo.common.Direction;
-import net.xylophones.fotilo.common.Rotation;
+import net.xylophones.fotilo.common.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -18,7 +15,9 @@ import org.apache.http.impl.client.HttpClients;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.apache.http.client.utils.HttpClientUtils.closeQuietly;
@@ -113,12 +112,12 @@ public class TR3818CameraControl implements CameraControl, AutoCloseable {
     }
 
     @Override
-    public void storePreset(int location) throws IOException {
+    public void storeLocation(int location) throws IOException {
 
     }
 
     @Override
-    public void gotoPreset(int location) throws IOException {
+    public void gotoLocation(int location) throws IOException {
 
     }
 
@@ -166,5 +165,14 @@ public class TR3818CameraControl implements CameraControl, AutoCloseable {
     @Override
     public void close() {
         closeQuietly(httpclient);
+    }
+
+    public CameraDefinition getCameraDefinition() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CameraOverview getCameraOverview() throws IOException {
+        throw new UnsupportedOperationException();
     }
 }

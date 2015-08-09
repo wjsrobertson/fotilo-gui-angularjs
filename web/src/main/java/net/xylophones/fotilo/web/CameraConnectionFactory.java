@@ -4,7 +4,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import net.xylophones.fotilo.CameraControl;
-import net.xylophones.fotilo.ScheduledCameraMovementStopper;
 import net.xylophones.fotilo.io.JPT3815WCameraControl;
 import net.xylophones.fotilo.io.TR3818CameraControl;
 import org.springframework.stereotype.Component;
