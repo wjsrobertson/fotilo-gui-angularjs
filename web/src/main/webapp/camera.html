@@ -20,22 +20,22 @@
   <script src="js/fotilo.js"></script>
 </head>
 
-<body ng-app="fotiloApp" ng-controller='FotiloMainController'>
+<body ng-app="fotiloApp" ng-controller='FotiloCameraController'>
 
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cameras <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="camera in cameras"><a href="#/camera/{{camera.name}}">{{camera.name}}</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+  <h1>{{camera.definition.cameraManufacturer}} - {{camera.definition.cameraType}}</h1>
+
+  <img src="/api/camera/{{selectedCamera}}/stream" />
+
+  <table>
+    <tr>
+      <td></td>
+    </tr>
+  </table>
+
+  <button>&#8592;</button><!--left-->
+  <button>&#8594;</button><!--right-->
+  <button>&#8593;</button><!--up-->
+  <button>&#8595;</button><!--down-->
 
 </body>
 
