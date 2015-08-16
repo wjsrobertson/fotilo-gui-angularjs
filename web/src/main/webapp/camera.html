@@ -26,16 +26,16 @@
 
   <img src="/api/camera/{{selectedCamera}}/stream" />
 
-  <table>
-    <tr>
-      <td></td>
-    </tr>
-  </table>
-
-  <button>&#8592;</button><!--left-->
-  <button>&#8594;</button><!--right-->
-  <button>&#8593;</button><!--up-->
-  <button>&#8595;</button><!--down-->
+  <div>
+    <span ng-repeat="direction in directions">
+      <button ng-click="move($index)">{{direction.symbol}}</button>
+    </span>
+  </div>
+  <div>
+    <select ng-model="camera.settings.resolution">
+      <option ng-repeat="resolution in camera.definition.supportedResolutions">{{resolution}}</option>
+    </select>
+  </div>
 
 </body>
 

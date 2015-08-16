@@ -24,6 +24,40 @@ public class CameraController {
     @Autowired
     private CameraConnectionFactory cameraConnectionFactory;
 
+    @RequestMapping(value = "/{cameraId}", method = RequestMethod.GET)
+    public CameraOverview getSettings(@PathVariable("cameraId") String cameraId) throws IOException {
+        return getCameraConnection(cameraId).getCameraOverview();
+    }
+
+    @RequestMapping(value = "/{cameraId}/settings/frame-rate/{fps}", method = RequestMethod.POST)
+    public void setFrameRate(@PathVariable("cameraId") String cameraId, @PathVariable("fps") Integer fps) throws IOException {
+        getCameraConnection(cameraId).setFrameRate(fps);
+    }
+
+    @RequestMapping(value = "/{cameraId}/settings/brightness/{brightness}", method = RequestMethod.POST)
+    public void setBrightness(@PathVariable("cameraId") String cameraId, @PathVariable("brightness") Integer brightness)
+            throws IOException {
+        getCameraConnection(cameraId).setBrightness(brightness);
+    }
+
+    @RequestMapping(value = "/{cameraId}/settings/contrast/{contrast}", method = RequestMethod.POST)
+    public void setContrast(@PathVariable("cameraId") String cameraId, @PathVariable("contrast") Integer contrast)
+            throws IOException {
+        getCameraConnection(cameraId).setContrast(contrast);
+    }
+
+    @RequestMapping(value = "/{cameraId}/settings/resolution/{resolution}", method = RequestMethod.POST)
+    public void setResolution(@PathVariable("cameraId") String cameraId, @PathVariable("resolution") String resolution)
+            throws IOException {
+        getCameraConnection(cameraId).setResolution(resolution);
+    }
+
+    @RequestMapping(value = "/{cameraId}/settings/pan-tilt-speed/{panTiltSpeed}", method = RequestMethod.POST)
+    public void setPanTiltSpeed(@PathVariable("cameraId") String cameraId, @PathVariable("panTiltSpeed") Integer panTiltSpeed)
+            throws IOException {
+        getCameraConnection(cameraId).setPanTiltSpeed(panTiltSpeed);
+    }
+
     @RequestMapping("/{cameraId}/control/move/{direction}")
     public String move(@PathVariable("cameraId") String cameraId,
                        @PathVariable("direction") String direction,
@@ -32,9 +66,9 @@ public class CameraController {
         Direction moveInDirection = Direction.fromString(direction);
 
         if (duration != null) {
-            cameraConnectionFactory.getCameraConnection(cameraId).move(moveInDirection, duration);
+            getCameraConnection(cameraId).move(moveInDirection, duration);
         } else {
-            cameraConnectionFactory.getCameraConnection(cameraId).move(moveInDirection);
+            getCameraConnection(cameraId).move(moveInDirection);
         }
 
         return "OK";
@@ -42,15 +76,16 @@ public class CameraController {
 
     @RequestMapping("/{cameraId}/control/stop")
     public String stop(@PathVariable("cameraId") String cameraId) throws IOException {
-        cameraConnectionFactory.getCameraConnection(cameraId).stopMovement();
+        getCameraConnection(cameraId).stopMovement();
         return "OK";
     }
+
 
     @RequestMapping("/{cameraId}/stream")
     public void streamVideo(OutputStream outputStream, HttpServletResponse response,
                             @PathVariable("cameraId") String cameraId) throws IOException {
 
-        CameraControl TR3818CameraControl = cameraConnectionFactory.getCameraConnection(cameraId);
+        CameraControl TR3818CameraControl = getCameraConnection(cameraId);
         CloseableHttpResponse cameraResponse = TR3818CameraControl.getVideoStream();
 
         try {
@@ -64,9 +99,7 @@ public class CameraController {
         }
     }
 
-    @RequestMapping(value = {"/{cameraId}"}, method = RequestMethod.GET)
-    public CameraOverview getSettings(@PathVariable("cameraId") String cameraId) throws IOException {
-        return cameraConnectionFactory.getCameraConnection(cameraId).getCameraOverview();
+    private CameraControl getCameraConnection(String cameraId) {
+        return cameraConnectionFactory.getCameraConnection(cameraId);
     }
-
 }
