@@ -80,7 +80,6 @@ public class CameraController {
         return "OK";
     }
 
-
     @RequestMapping("/{cameraId}/stream")
     public void streamVideo(OutputStream outputStream, HttpServletResponse response,
                             @PathVariable("cameraId") String cameraId) throws IOException {

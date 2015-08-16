@@ -1,14 +1,30 @@
-var fotiloApp = angular.module('fotiloApp', []);
+var fotiloApp = angular.module('fotiloApp', ['ui.router']);
 
-fotiloApp.factory('CameraService', function () {
+var fotiloRouteConfig = function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/cameras");
 
-})
+    $stateProvider
+        .state('camera-list', {
+            url: "/cameras",
+            templateUrl: "views/camera-list.view.html",
+            controller: MainController
+        })
+        .state('camera', {
+            url: "/camera/:cameraId",
+            templateUrl: "views/camera.view.html",
+            controller: FotiloCameraController
+        })
+}
 
-fotiloApp.controller('FotiloMainController', function ($scope, $http) {
+var MainController = function ($scope, $http) {
     $http.get('/api/cameras').success(function (data, status, headers, config) {
         $scope.cameras = data;
     });
-});
+};
+
+fotiloApp.config(fotiloRouteConfig);
+
+//fotiloApp.controller('MainController',);
 
 var DIRECTIONS = Object.freeze([
     {name: "left", symbol: '←'},
@@ -18,7 +34,8 @@ var DIRECTIONS = Object.freeze([
     {name: "down", symbol: '↓'}
 ]);
 
-var CameraController = function ($http, $scope) {
+// TODO - redo as an angular dependency
+var CameraService = function ($http, $scope) {
     return {
         changeFrameRate: function (newFrameRate, oldFrameRate) {
             $http.post('/api/camera/' + $scope.selectedCamera + '/settings/frame-rate/' + newFrameRate);
@@ -35,10 +52,10 @@ var CameraController = function ($http, $scope) {
     };
 }
 
-fotiloApp.controller('FotiloCameraController', function ($scope, $http) {
+var FotiloCameraController = function ($scope, $http, $stateParams) {
     $scope.directions = DIRECTIONS;
-    $scope.selectedCamera = "inside";
-    $scope.cameraController = CameraController($http, $scope);
+    $scope.selectedCamera = $stateParams.cameraId;
+    $scope.cameraService = CameraService($http, $scope);
 
     $http.get('/api/cameras').success(function (data, status, headers, config) {
         $scope.cameras = data;
@@ -49,7 +66,7 @@ fotiloApp.controller('FotiloCameraController', function ($scope, $http) {
 
         $scope.$watch(
             'camera.settings.resolution',
-            $scope.cameraController.changeResolution,
+            $scope.cameraService.changeResolution,
             true
         );
     });
@@ -57,10 +74,9 @@ fotiloApp.controller('FotiloCameraController', function ($scope, $http) {
     $scope.move = function (directionIndex, duration) {
         var direction = $scope.directions[directionIndex];
         if (direction.name === 'stop') {
-            $scope.cameraController.stop();
+            $scope.cameraService.stop();
         } else {
-            $scope.cameraController.move(direction.name, duration);
+            $scope.cameraService.move(direction.name, duration);
         }
     }
-});
-
+}

@@ -1,0 +1,14 @@
+<h1>{{camera.definition.cameraManufacturer}} - {{camera.definition.cameraType}}</h1>
+
+<img src="/api/camera/{{selectedCamera}}/stream" />
+
+<div>
+    <span ng-repeat="direction in directions">
+      <button ng-click="move($index)">{{direction.symbol}}</button>
+    </span>
+</div>
+<div>
+  <select ng-model="camera.settings.resolution">
+    <option ng-repeat="resolution in camera.definition.supportedResolutions">{{resolution}}</option>
+  </select>
+</div>
