@@ -258,7 +258,7 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
         cameraDefinition.setContrastRange(new SettingsRange(0, 5));
         cameraDefinition.setFrameRateRange(new SettingsRange(1, 30));
         cameraDefinition.setLocationRange(new SettingsRange(1, 10));
-        cameraDefinition.setPanTiltSpeedRange(new SettingsRange(10, 0));
+        cameraDefinition.setPanTiltSpeedRange(new SettingsRange(1, 10));
 
         List<String> resolutions = new ArrayList<>();
         resolutions.add("160x120");

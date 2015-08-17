@@ -1,4 +1,4 @@
-var fotiloApp = angular.module('fotiloApp', ['ui.router']);
+var fotiloApp = angular.module('fotiloApp', ['ui.router', 'ui.slider']);
 
 var fotiloRouteConfig = function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/cameras");
@@ -24,8 +24,6 @@ var MainController = function ($scope, $http) {
 
 fotiloApp.config(fotiloRouteConfig);
 
-//fotiloApp.controller('MainController',);
-
 var DIRECTIONS = Object.freeze([
     {name: "left", symbol: '←'},
     {name: "right", symbol: '→'},
@@ -37,11 +35,20 @@ var DIRECTIONS = Object.freeze([
 // TODO - redo as an angular dependency
 var CameraService = function ($http, $scope) {
     return {
+        changeBrightness: function (newBrightness, oldBrightness) {
+            $http.post('/api/camera/' + $scope.selectedCamera + '/settings/brightness/' + newBrightness);
+        },
         changeFrameRate: function (newFrameRate, oldFrameRate) {
             $http.post('/api/camera/' + $scope.selectedCamera + '/settings/frame-rate/' + newFrameRate);
         },
         changeResolution: function (newResolution, oldResolution) {
             $http.post('/api/camera/' + $scope.selectedCamera + '/settings/resolution/' + newResolution);
+        },
+        changeContrast: function (newContrast, oldContrast) {
+            $http.post('/api/camera/' + $scope.selectedCamera + '/settings/contrast/' + newContrast);
+        },
+        changePanTiltSpeed: function (newPanTiltSpeed, oldPanTiltSpeed) {
+            $http.post('/api/camera/' + $scope.selectedCamera + '/settings/pan-tilt-speed/' + newPanTiltSpeed);
         },
         move: function (directionName, duration) {
             $http.post('/api/camera/' + $scope.selectedCamera + '/control/move/' + directionName);
@@ -67,6 +74,26 @@ var FotiloCameraController = function ($scope, $http, $stateParams) {
         $scope.$watch(
             'camera.settings.resolution',
             $scope.cameraService.changeResolution,
+            true
+        );
+        $scope.$watch(
+            'camera.settings.frameRate',
+            $scope.cameraService.changeFrameRate,
+            true
+        );
+        $scope.$watch(
+            'camera.settings.contrast',
+            $scope.cameraService.changeContrast,
+            true
+        );
+        $scope.$watch(
+            'camera.settings.brightness',
+            $scope.cameraService.changeBrightness,
+            true
+        );
+        $scope.$watch(
+            'camera.settings.panTiltSpeed',
+            $scope.cameraService.changePanTiltSpeed,
             true
         );
     });

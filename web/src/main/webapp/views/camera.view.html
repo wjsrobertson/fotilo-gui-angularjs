@@ -1,14 +1,29 @@
 <h1>{{camera.definition.cameraManufacturer}} - {{camera.definition.cameraType}}</h1>
 
-<img src="/api/camera/{{selectedCamera}}/stream" />
+<img src="/api/camera/{{selectedCamera}}/stream"/>
 
 <div>
     <span ng-repeat="direction in directions">
       <button ng-click="move($index)">{{direction.symbol}}</button>
     </span>
 </div>
+
 <div>
   <select ng-model="camera.settings.resolution">
     <option ng-repeat="resolution in camera.definition.supportedResolutions">{{resolution}}</option>
   </select>
+</div>
+
+<div style="width:640px;">
+  <div>Speed</div>
+  <div ui-slider min="{{camera.definition.panTiltSpeedRange.min}}" max="{{camera.definition.panTiltSpeedRange.max}}" ng-model="camera.settings.panTiltSpeed"></div>
+
+  <div>Brightness</div>
+  <div ui-slider min="{{camera.definition.brightnessRange.min}}" max="{{camera.definition.brightnessRange.max}}" ng-model="camera.settings.brightness"></div>
+
+  <div>Contrast</div>
+  <div ui-slider min="{{camera.definition.contrastRange.min}}" max="{{camera.definition.contrastRange.max}}" ng-model="camera.settings.contrast"></div>
+
+  <div>Image Frame Rate</div>
+  <div ui-slider min="{{camera.definition.frameRateRange.min}}" max="{{camera.definition.frameRateRange.max}}" ng-model="camera.settings.frameRate"></div>
 </div>
