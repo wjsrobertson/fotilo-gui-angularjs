@@ -1,0 +1,22 @@
+
+brightness 1 -> 10
+
+    http://192.168.1.5:81/media/?action=cmd&code=6&value=1
+    http://192.168.1.5:81/media/?action=cmd&code=6&value=10
+
+Contrast - 1 -> 10
+
+    http://192.168.1.5:81/media/?action=cmd&code=5&value=1
+    http://192.168.1.5:81/media/?action=cmd&code=5&value=10
+
+FPS:
+
+    http://192.168.1.5:81/media/?action=cmd&code=8&value=30
+
+Pan tilt speed:
+
+    fastest:
+    http://192.168.1.5:81/set_misc.cgi?ptz_patrol_rate=0
+
+    slowest:
+    http://192.168.1.5:81/set_misc.cgi?ptz_patrol_rate=10

@@ -4,6 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import net.xylophones.fotilo.CameraControl;
+import net.xylophones.fotilo.io.JPT3815W2CameraControl;
 import net.xylophones.fotilo.io.JPT3815WCameraControl;
 import net.xylophones.fotilo.web.configfile.model.CameraConfig;
 import net.xylophones.fotilo.web.configfile.model.ConfigFile;
@@ -54,6 +55,13 @@ public class CameraConnectionFactory {
             // TODO - replace with factory
             if ("JPT3815W".equals(cameraConfig.getType())) {
                 return new JPT3815WCameraControl(
+                        cameraConfig.getHost(),
+                        cameraConfig.getPort(),
+                        cameraConfig.getUsername(),
+                        cameraConfig.getPassword()
+                );
+            } else if ("JPT3815W2".equals(cameraConfig.getType())) {
+                return new JPT3815W2CameraControl(
                         cameraConfig.getHost(),
                         cameraConfig.getPort(),
                         cameraConfig.getUsername(),
