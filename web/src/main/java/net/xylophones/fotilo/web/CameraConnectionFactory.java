@@ -5,13 +5,38 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import net.xylophones.fotilo.CameraControl;
 import net.xylophones.fotilo.io.JPT3815WCameraControl;
-import net.xylophones.fotilo.io.TR3818CameraControl;
+import net.xylophones.fotilo.web.configfile.model.CameraConfig;
+import net.xylophones.fotilo.web.configfile.model.ConfigFile;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
 @Component
 public class CameraConnectionFactory {
+
+    @Autowired
+    private ConfigFile configFile;
+
+    private final Map<String, CameraConfig> availableCameras = new ConcurrentHashMap<>();
+
+    @PostConstruct
+    private void init() {
+        for (CameraConfig cameraConfig : configFile.getCameras()) {
+            availableCameras.put(cameraConfig.getId(), cameraConfig);
+        }
+    }
+
+    public CameraControl getCameraConnection(String cameraId) {
+        try {
+            return connections.get(cameraId);
+        } catch (ExecutionException e) {
+            return null;
+        }
+    }
 
     private LoadingCache<String, CameraControl> connections = CacheBuilder.newBuilder()
             .build(
@@ -23,24 +48,20 @@ public class CameraConnectionFactory {
             );
 
     private CameraControl createCameraConnection(String cameraId) {
-        switch (cameraId) {
-            case "side":
-                return new TR3818CameraControl("192.168.1.139", 81, "admin", "");
-            case "front":
-                return new TR3818CameraControl("192.168.1.5", 81, "admin", "admin123");
-            case "inside":
-                return new JPT3815WCameraControl("192.168.1.3", 7777, "admin", "admin");
+        CameraConfig cameraConfig = availableCameras.get(cameraId);
+
+        if (cameraConfig != null) {
+            // TODO - replace with factory
+            if ("JPT3815W".equals(cameraConfig.getType())) {
+                return new JPT3815WCameraControl(
+                        cameraConfig.getHost(),
+                        cameraConfig.getPort(),
+                        cameraConfig.getUsername(),
+                        cameraConfig.getPassword()
+                );
+            }
         }
 
         return null;
     }
-
-    public CameraControl getCameraConnection(String cameraId) {
-        try {
-            return connections.get(cameraId);
-        } catch (ExecutionException e) {
-            return null;
-        }
-    }
-
 }

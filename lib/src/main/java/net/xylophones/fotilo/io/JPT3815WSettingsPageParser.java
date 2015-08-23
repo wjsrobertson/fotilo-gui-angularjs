@@ -44,6 +44,7 @@ public class JPT3815WSettingsPageParser {
                 frameRate = getIntegerFromMatch(line, FRAMERATE_PATTERN);
             } else if (brightness == null && line.contains(BRIGHTNESS_SRING)) {
                 brightness = getIntegerFromMatch(line, BRIGHTNESS_PATTERN);
+                brightness = (int) (255 * (((float) brightness) / 10));
             } else if (contrast == null && line.contains(CONTRAST_SRING)) {
                 contrast = getIntegerFromMatch(line, CONTRAST_PATTERN);
             } else if (resolution == null && line.contains(RESOLUTION_STRING)) {

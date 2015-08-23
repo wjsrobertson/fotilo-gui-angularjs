@@ -36,18 +36,33 @@ var DIRECTIONS = Object.freeze([
 var CameraService = function ($http, $scope) {
     return {
         changeBrightness: function (newBrightness, oldBrightness) {
+            if (newBrightness === oldBrightness) {
+                return;
+            }
             $http.post('/api/camera/' + $scope.selectedCamera + '/settings/brightness/' + newBrightness);
         },
         changeFrameRate: function (newFrameRate, oldFrameRate) {
+            if (newFrameRate === newFrameRate) {
+                return;
+            }
             $http.post('/api/camera/' + $scope.selectedCamera + '/settings/frame-rate/' + newFrameRate);
         },
         changeResolution: function (newResolution, oldResolution) {
+            if (newResolution === newResolution) {
+                return;
+            }
             $http.post('/api/camera/' + $scope.selectedCamera + '/settings/resolution/' + newResolution);
         },
         changeContrast: function (newContrast, oldContrast) {
+            if (newContrast === newContrast) {
+                return;
+            }
             $http.post('/api/camera/' + $scope.selectedCamera + '/settings/contrast/' + newContrast);
         },
         changePanTiltSpeed: function (newPanTiltSpeed, oldPanTiltSpeed) {
+            if (newPanTiltSpeed === newPanTiltSpeed) {
+                return;
+            }
             $http.post('/api/camera/' + $scope.selectedCamera + '/settings/pan-tilt-speed/' + newPanTiltSpeed);
         },
         move: function (directionName, duration) {
