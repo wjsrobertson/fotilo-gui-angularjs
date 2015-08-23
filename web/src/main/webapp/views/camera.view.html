@@ -4,7 +4,7 @@
   <img class="img-responsive img-rounded" src="/api/camera/{{selectedCamera}}/stream"/>
 </div>
 
-<form>
+<div class="secondary">
   <div class="form-group">
     <span ng-repeat="direction in directions">
       <button ng-click="move($index)" class="btn btn-lg">{{direction.symbol}}</button>
@@ -21,7 +21,6 @@
   <div>
     <div class="form-group">
       <label>Speed</label>
-
       <em>{{camera.definition.panTiltSpeedRange.min}} / <strong>{{camera.settings.panTiltSpeed}}</strong> /
         {{camera.definition.panTiltSpeedRange.max}}
       </em>
@@ -60,4 +59,4 @@
            ng-model="camera.settings.frameRate"></div>
     </div>
   </div>
-</form>
+</div>
