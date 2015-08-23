@@ -4,16 +4,29 @@ var fotiloRouteConfig = function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/cameras");
 
     $stateProvider
-        .state('camera-list', {
+        .state('cameras', {
             url: "/cameras",
-            templateUrl: "views/camera-list.view.html",
-            controller: MainController
+            views: {
+                'camera-list': {
+                    templateUrl: "views/camera-list.view.html",
+                    controller: MainController
+                },
+                'camera': {}
+            }
         })
         .state('camera', {
             url: "/camera/:cameraId",
-            templateUrl: "views/camera.view.html",
-            controller: FotiloCameraController
-        })
+            views: {
+                'camera-list': {
+                    templateUrl: "views/camera-list.view.html",
+                    controller: MainController
+                },
+                'camera': {
+                    templateUrl: "views/camera.view.html",
+                    controller: FotiloCameraController
+                }
+            }
+        });
 }
 
 fotiloApp.config(fotiloRouteConfig);
