@@ -6,6 +6,7 @@ import com.google.common.cache.LoadingCache;
 import net.xylophones.fotilo.CameraControl;
 import net.xylophones.fotilo.io.JPT3815W2CameraControl;
 import net.xylophones.fotilo.io.JPT3815WCameraControl;
+import net.xylophones.fotilo.io.TR3818CameraControl;
 import net.xylophones.fotilo.web.configfile.model.CameraConfig;
 import net.xylophones.fotilo.web.configfile.model.ConfigFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,13 @@ public class CameraConnectionFactory {
                 );
             } else if ("JPT3815W2".equals(cameraConfig.getType())) {
                 return new JPT3815W2CameraControl(
+                        cameraConfig.getHost(),
+                        cameraConfig.getPort(),
+                        cameraConfig.getUsername(),
+                        cameraConfig.getPassword()
+                );
+            } else if ("TR3818".equals(cameraConfig.getType())) {
+                return new TR3818CameraControl(
                         cameraConfig.getHost(),
                         cameraConfig.getPort(),
                         cameraConfig.getUsername(),

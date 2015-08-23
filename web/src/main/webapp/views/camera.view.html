@@ -1,62 +1,71 @@
-<h1>{{camera.definition.cameraManufacturer}} - {{camera.definition.cameraType}}</h1>
+<div class="container-fluid row">
 
-<div class="lead">
-  <img class="img-responsive img-rounded" src="/api/camera/{{selectedCamera}}/stream"/>
-</div>
+  <div class="col-md-4">
+    <h1>{{camera.definition.cameraManufacturer}} - {{camera.definition.cameraType}}</h1>
 
-<div class="secondary">
-  <div class="form-group">
+    <hr>
+
+    <div class="form-group">
     <span ng-repeat="direction in directions">
       <button ng-click="move($index)" class="btn btn-lg">{{direction.symbol}}</button>
     </span>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <label>Resolution</label>
+      <select ng-model="camera.settings.resolution" class="form-control">
+        <option ng-repeat="resolution in camera.definition.supportedResolutions">{{resolution}}</option>
+      </select>
+    </div>
+
+    <div>
+      <div class="form-group">
+        <label>Speed</label>
+        <em>{{camera.definition.panTiltSpeedRange.min}} / <strong>{{camera.settings.panTiltSpeed}}</strong> /
+          {{camera.definition.panTiltSpeedRange.max}}
+        </em>
+
+        <div ui-slider min="{{camera.definition.panTiltSpeedRange.min}}"
+             max="{{camera.definition.panTiltSpeedRange.max}}"
+             ng-model="camera.settings.panTiltSpeed"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Brightness</label>
+        <em>{{camera.definition.brightnessRange.min}} / <strong>{{camera.settings.brightness}}</strong> /
+          {{camera.definition.brightnessRange.max}}
+        </em>
+
+        <div ui-slider min="{{camera.definition.brightnessRange.min}}" max="{{camera.definition.brightnessRange.max}}"
+             ng-model="camera.settings.brightness"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Contrast</label>
+        <em>{{camera.definition.contrastRange.min}} / <strong>{{camera.settings.contrast}}</strong> /
+          {{camera.definition.contrastRange.max}}
+        </em>
+
+        <div ui-slider min="{{camera.definition.contrastRange.min}}" max="{{camera.definition.contrastRange.max}}"
+             ng-model="camera.settings.contrast"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Image Frame Rate</label>
+        <em>{{camera.definition.frameRateRange.min}} / <strong>{{camera.settings.frameRate}}</strong> /
+          {{camera.definition.frameRateRange.max}}
+        </em>
+
+        <div ui-slider min="{{camera.definition.frameRateRange.min}}" max="{{camera.definition.frameRateRange.max}}"
+             ng-model="camera.settings.frameRate"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label>Resolution</label>
-    <select ng-model="camera.settings.resolution" class="form-control">
-      <option ng-repeat="resolution in camera.definition.supportedResolutions">{{resolution}}</option>
-    </select>
+  <div class="col-md-8">
+    <img class="img-responsive img-rounded" src="/api/camera/{{selectedCamera}}/stream"/>
   </div>
 
-  <div>
-    <div class="form-group">
-      <label>Speed</label>
-      <em>{{camera.definition.panTiltSpeedRange.min}} / <strong>{{camera.settings.panTiltSpeed}}</strong> /
-        {{camera.definition.panTiltSpeedRange.max}}
-      </em>
-
-      <div ui-slider min="{{camera.definition.panTiltSpeedRange.min}}" max="{{camera.definition.panTiltSpeedRange.max}}"
-           ng-model="camera.settings.panTiltSpeed"></div>
-    </div>
-
-    <div class="form-group">
-      <label>Brightness</label>
-      <em>{{camera.definition.brightnessRange.min}} / <strong>{{camera.settings.brightness}}</strong> /
-        {{camera.definition.brightnessRange.max}}
-      </em>
-
-      <div ui-slider min="{{camera.definition.brightnessRange.min}}" max="{{camera.definition.brightnessRange.max}}"
-           ng-model="camera.settings.brightness"></div>
-    </div>
-
-    <div class="form-group">
-      <label>Contrast</label>
-      <em>{{camera.definition.contrastRange.min}} / <strong>{{camera.settings.contrast}}</strong> /
-        {{camera.definition.contrastRange.max}}
-      </em>
-
-      <div ui-slider min="{{camera.definition.contrastRange.min}}" max="{{camera.definition.contrastRange.max}}"
-           ng-model="camera.settings.contrast"></div>
-    </div>
-
-    <div class="form-group">
-      <label>Image Frame Rate</label>
-      <em>{{camera.definition.frameRateRange.min}} / <strong>{{camera.settings.frameRate}}</strong> /
-        {{camera.definition.frameRateRange.max}}
-      </em>
-
-      <div ui-slider min="{{camera.definition.frameRateRange.min}}" max="{{camera.definition.frameRateRange.max}}"
-           ng-model="camera.settings.frameRate"></div>
-    </div>
-  </div>
 </div>
