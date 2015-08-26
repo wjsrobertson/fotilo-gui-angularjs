@@ -34,6 +34,8 @@ public interface CameraControl {
 
     void setFrameRate(int fps) throws IOException;
 
+    void setInfraRedLightOn(boolean on) throws IOException;
+
     CameraSettings getCameraSettings() throws IOException;
 
     CameraDefinition getCameraDefinition() throws IOException;

@@ -82,6 +82,7 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
     // TODO - dependency injection
     private final JPT3815WSettingsPageParser settingsParser = new JPT3815WSettingsPageParser();
 
+    // TODO - get rid of this constructor
     public JPT3815WCameraControl(String host, int port, String user, String pass) {
         cameraInfo = new CameraInfo();
         cameraInfo.setHost(host);
@@ -200,6 +201,11 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
     }
 
     @Override
+    public void setInfraRedLightOn(boolean on) throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void saveSnapshot(Path path) throws IOException {
         String snapshotUrl = String.format(SNAPSHOT_URL, cameraInfo.getHost(), cameraInfo.getPort());
         HttpGet httpget = new HttpGet(snapshotUrl);
@@ -259,6 +265,7 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
         cameraDefinition.setFrameRateRange(new SettingsRange(1, 30));
         cameraDefinition.setLocationRange(new SettingsRange(1, 10));
         cameraDefinition.setPanTiltSpeedRange(new SettingsRange(1, 10));
+        cameraDefinition.setSupportsInfraRedCut(false);
 
         List<String> resolutions = new ArrayList<>();
         resolutions.add("160x120");

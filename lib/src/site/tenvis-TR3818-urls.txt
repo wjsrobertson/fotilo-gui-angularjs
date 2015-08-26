@@ -1,6 +1,6 @@
 
 Get settings:
-http://192.168.1.6:81/get_camera_params.cgi?loginuse=admin&loginpas=admin123
+http://192.168.1.5:81/get_camera_params.cgi?loginuse=admin&loginpas=admin123
 
 /*
 	var resolution=0;
@@ -18,31 +18,32 @@ http://192.168.1.6:81/get_camera_params.cgi?loginuse=admin&loginpas=admin123
 	var ircut=0;
 */
 
-http://192.168.1.6:81/get_status.cgi
-http://192.168.1.6:81/get_params.cgi
-http://192.168.1.6:81/get_misc.cgi
+http://192.168.1.5:81/get_status.cgi
+http://192.168.1.5:81/get_params.cgi
+http://192.168.1.5:81/get_misc.cgi
 
 Move:
 	slow:
-	http://192.168.1.6:81/set_misc.cgi?next_url=ptz.html&loginuse=admin&loginpas=admin123&ptz_patrol_rate=1&ptz_patrol_up_rate=1&ptz_patrol_down_rate=1&ptz_patrol_left_rate=1&ptz_patrol_right_rate=1&ptz_dispreset=0&ptz_preset=0&led_mode=1&ptz_run_times=1
+	http://192.168.1.5:81/set_misc.cgi?next_url=ptz.html&loginuse=admin&loginpas=admin123&ptz_patrol_rate=1&ptz_patrol_up_rate=1&ptz_patrol_down_rate=1&ptz_patrol_left_rate=1&ptz_patrol_right_rate=1&ptz_dispreset=0&ptz_preset=0&led_mode=1&ptz_run_times=1
 	Normal:
-	http://192.168.1.6:81/set_misc.cgi?next_url=ptz.html&loginuse=admin&loginpas=admin123&ptz_patrol_rate=5&ptz_patrol_up_rate=5&ptz_patrol_down_rate=5&ptz_patrol_left_rate=5&ptz_patrol_right_rate=5&ptz_dispreset=0&ptz_preset=0&led_mode=1&ptz_run_times=1
+	http://192.168.1.5:81/set_misc.cgi?next_url=ptz.html&loginuse=admin&loginpas=admin123&ptz_patrol_rate=5&ptz_patrol_up_rate=5&ptz_patrol_down_rate=5&ptz_patrol_left_rate=5&ptz_patrol_right_rate=5&ptz_dispreset=0&ptz_preset=0&led_mode=1&ptz_run_times=1
 	Fast:
-	http://192.168.1.6:81/set_misc.cgi?next_url=ptz.html&loginuse=admin&loginpas=admin123&ptz_patrol_rate=10&ptz_patrol_up_rate=10&ptz_patrol_down_rate=10&ptz_patrol_left_rate=10&ptz_patrol_right_rate=10&ptz_dispreset=0&ptz_preset=0&led_mode=1&ptz_run_times=1
+	http://192.168.1.5:81/set_misc.cgi?next_url=ptz.html&loginuse=admin&loginpas=admin123&ptz_patrol_rate=10&ptz_patrol_up_rate=10&ptz_patrol_down_rate=10&ptz_patrol_left_rate=10&ptz_patrol_right_rate=10&ptz_dispreset=0&ptz_preset=0&led_mode=1&ptz_run_times=1
+	http://192.168.1.5:81/set_misc.cgi?loginuse=admin&loginpas=admin123&ptz_patrol_rate=10
 
-http://192.168.1.6:81/camera_control.cgi&loginuse=admin&loginpas=admin123&param=100&value=10&14074462463280.8427130163181573?_=1407446106574
+http://192.168.1.5:81/camera_control.cgi&loginuse=admin&loginpas=admin123&param=100&value=10&14074462463280.8427130163181573?_=1407446106574
 
 left:
-http://192.168.1.6:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=4&onestep=0
+http://192.168.1.5:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=4&onestep=0
 
 stop moving left:
-http://192.168.1.6:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=5&onestep=0
+http://192.168.1.5:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=5&onestep=0
 
 right:
-http://192.168.1.6:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=6&onestep=0
+http://192.168.1.5:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=6&onestep=0
 
 stop right:
-http://192.168.1.6:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=7&onestep=0
+http://192.168.1.5:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=7&onestep=0
 
 up: 0, stop: 1
 down: 2, stop: 3
@@ -55,34 +56,46 @@ down right: 93, stop: 1
 rotate: 25
 
 IR On
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=14&value=1
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=14&value=1
 
 IR Off
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=14&value=0
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=14&value=0
 
-Flip & Mirror:
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=5&value=0
+Normal:
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=5&value=0
 Flip:
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=5&value=1
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=5&value=1
 Mirror:
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=5&value=2
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=5&value=2
 Flip & Mirror
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=5&value=3
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=5&value=3
+http://192.168.1.4:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=5&value=3&14406251440550.6486997525207698&_=1440618768332
 
 Brightness: -128 -> 128
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=1&value=-117
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=1&value=-117
 
 Contrast: 1 -> 254
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=2&value=4
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=2&value=4
 
-Patrol on: http://192.168.1.6:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=28
-Patrol off: http://192.168.1.6:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=29
+Patrol on: http://192.168.1.5:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=28
+Patrol off: http://192.168.1.5:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=29
 
-Preset 1 go: http://192.168.1.6:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=31
-Preset 1 set: http://192.168.1.6:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=30
+Preset 1 go: http://192.168.1.5:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=31
+Preset 1 set: http://192.168.1.5:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=30
+Preset 5 set: http://192.168.1.4:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=38
+Preset 5 go: http://192.168.1.4:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=39
+Preset 8 go: http://192.168.1.4:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=45
+Preset 8 set: http://192.168.1.4:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=44
+set 2
+http://192.168.1.4:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=32
+go 2
+http://192.168.1.4:81/decoder_control.cgi?loginuse=admin&loginpas=admin123&command=33
+
 
 640x480:
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=0&value=0
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=0&value=0
 320x240
-http://192.168.1.6:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=0&value=1
+http://192.168.1.5:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=0&value=1
 
+Frame rate:
+http://192.168.1.4:81/camera_control.cgi?loginuse=admin&loginpas=admin123&param=6&value=25

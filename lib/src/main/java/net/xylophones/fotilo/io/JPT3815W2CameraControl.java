@@ -196,6 +196,11 @@ public class JPT3815W2CameraControl implements CameraControl, AutoCloseable {
     }
 
     @Override
+    public void setInfraRedLightOn(boolean on) throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void saveSnapshot(Path path) throws IOException {
         String snapshotUrl = urlProvider.getSnapshotUrl(cameraInfo);
         HttpGet httpget = new HttpGet(snapshotUrl);

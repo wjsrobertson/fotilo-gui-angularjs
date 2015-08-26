@@ -12,6 +12,8 @@ public class CameraSettings {
 
     private Integer panTiltSpeed;
 
+    private Boolean infrRedCutEnabled;
+
     public Integer getFrameRate() {
         return frameRate;
     }
@@ -50,5 +52,13 @@ public class CameraSettings {
 
     public void setPanTiltSpeed(Integer panTiltSpeed) {
         this.panTiltSpeed = panTiltSpeed;
+    }
+
+    public Boolean getInfrRedCutEnabled() {
+        return infrRedCutEnabled;
+    }
+
+    public void setInfrRedCutEnabled(Boolean infrRedCutEnabled) {
+        this.infrRedCutEnabled = infrRedCutEnabled;
     }
 }

@@ -20,6 +20,8 @@ public class CameraDefinition {
 
     private List<String> supportedResolutions;
 
+    private Boolean supportsInfraRedCut;
+
     public String getCameraManufacturer() {
         return cameraManufacturer;
     }
@@ -82,5 +84,13 @@ public class CameraDefinition {
 
     public void setSupportedResolutions(List<String> supportedResolutions) {
         this.supportedResolutions = supportedResolutions;
+    }
+
+    public Boolean getSupportsInfraRedCut() {
+        return supportsInfraRedCut;
+    }
+
+    public void setSupportsInfraRedCut(Boolean supportsInfraRedCut) {
+        this.supportsInfraRedCut = supportsInfraRedCut;
     }
 }
