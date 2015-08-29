@@ -91,7 +91,11 @@ var CameraService = function ($http, $scope) {
             changeSetting(newValue, oldValue, 'infra-red-light-on');
         },
         move: function (directionName, duration) {
-            $http.post('/api/camera/' + $scope.selectedCamera + '/control/move/' + directionName);
+            if (duration) {
+                $http.post('/api/camera/' + $scope.selectedCamera + '/control/move/' + directionName + '?duration=' + duration);
+            } else {
+                $http.post('/api/camera/' + $scope.selectedCamera + '/control/move/' + directionName);
+            }
         },
         stop: function () {
             $http.post('/api/camera/' + $scope.selectedCamera + '/control/stop');
@@ -111,6 +115,7 @@ var FotiloCameraController = function ($scope, $http, $stateParams) {
     $scope.directions = DIRECTIONS;
     $scope.selectedCamera = $stateParams.cameraId;
     $scope.cameraService = CameraService($http, $scope);
+    $scope.stepMoveDuration = 1;
 
     $http.get('/api/cameras').success(function (data, status, headers, config) {
         $scope.cameras = data;
@@ -141,11 +146,11 @@ var FotiloCameraController = function ($scope, $http, $stateParams) {
         }
     }
 
-    $scope.flip = function(rotation) {
+    $scope.flip = function (rotation) {
         $scope.cameraService.flip(rotation);
     }
 
-    $scope.orientation = function(orientation) {
+    $scope.orientation = function (orientation) {
         $scope.cameraService.changeOrientation(orientation);
     }
 }
