@@ -1,6 +1,7 @@
 package net.xylophones.fotilo.io;
 
 import net.xylophones.fotilo.common.CameraDefinition;
+import net.xylophones.fotilo.common.OrientationControlType;
 import net.xylophones.fotilo.common.SettingsRange;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class TR3818DefinitionProvider implements CameraDefinitionProvider {
         cameraDefinition.setLocationRange(new SettingsRange(1, 8));
         cameraDefinition.setPanTiltSpeedRange(new SettingsRange(1, 10));
         cameraDefinition.setSupportsInfraRedCut(true);
+        cameraDefinition.setOrientationControlType(OrientationControlType.EXPLICIT);
 
         List<String> resolutions = new ArrayList<>();
         resolutions.add("320x240");

@@ -42,15 +42,20 @@ public class TR3818CameraControl implements CameraControl, AutoCloseable {
     private static final String COMMAND_SPEED = "ptz_patrol_rate";
     private static final int COMMAND_STOP = 1;
 
+    private static final int PARAM_RESOLUTION = 0;
     private static final int PARAM_BRIGHTNESS = 1;
     private static final int PARAM_SET_CONTRAST = 2;
+    private static final int PARAM_ORIENTATION = 5;
     private static final int PARAM_FRAME_RATE = 6;
-    private static final int PARAM_RESOLUTION = 0;
     private static final int PARAM_INFRA_RED = 14;
 
     private static final int COMMAND_SET_LOCATION_OFFSET = 29;
     private static final int COMMAND_GOTO_LOCATION_OFFSET = 30;
-    private static final int PARAM_ROTATION = 5;
+
+    private static final int ORIENATION_NORMAL = 0;
+    private static final int ORIENATION_FLIP = 1;
+    private static final int ORIENATION_MIRROR = 2;
+    private static final int ORIENATION_FLIP_AND_MIRROR = 3;
 
     private final CloseableHttpClient httpclient;
     private final String host;
@@ -183,6 +188,19 @@ public class TR3818CameraControl implements CameraControl, AutoCloseable {
     public void setInfraRedLightOn(boolean on) throws IOException {
         int irValue = on ? 1 : 0;
         setCameraControlParam(PARAM_INFRA_RED, irValue);
+    }
+
+    @Override
+    public void oritentation(Orientation orientation) throws IOException {
+        if (Orientation.FLIP == orientation) {
+            setCameraControlParam(PARAM_ORIENTATION, ORIENATION_FLIP);
+        } else if (Orientation.FLIP_AND_MIRROR == orientation) {
+            setCameraControlParam(PARAM_ORIENTATION, ORIENATION_NORMAL);
+        } else if (Orientation.MIRROR == orientation) {
+            setCameraControlParam(PARAM_ORIENTATION, ORIENATION_MIRROR);
+        } else if (Orientation.NORMAL == orientation) {
+            setCameraControlParam(PARAM_ORIENTATION, ORIENATION_FLIP_AND_MIRROR);
+        }
     }
 
     @Override

@@ -36,6 +36,8 @@ public interface CameraControl {
 
     void setInfraRedLightOn(boolean on) throws IOException;
 
+    void oritentation(Orientation orientation) throws IOException;
+
     CameraSettings getCameraSettings() throws IOException;
 
     CameraDefinition getCameraDefinition() throws IOException;

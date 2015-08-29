@@ -22,6 +22,8 @@ public class CameraDefinition {
 
     private Boolean supportsInfraRedCut;
 
+    private OrientationControlType orientationControlType;
+
     public String getCameraManufacturer() {
         return cameraManufacturer;
     }
@@ -92,5 +94,13 @@ public class CameraDefinition {
 
     public void setSupportsInfraRedCut(Boolean supportsInfraRedCut) {
         this.supportsInfraRedCut = supportsInfraRedCut;
+    }
+
+    public OrientationControlType getOrientationControlType() {
+        return orientationControlType;
+    }
+
+    public void setOrientationControlType(OrientationControlType orientationControlType) {
+        this.orientationControlType = orientationControlType;
     }
 }

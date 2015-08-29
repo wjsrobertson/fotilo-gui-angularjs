@@ -79,6 +79,17 @@ var CameraService = function ($http, $scope) {
         changePanTiltSpeed: function (newPanTiltSpeed, oldPanTiltSpeed) {
             changeSetting(newPanTiltSpeed, oldPanTiltSpeed, 'pan-tilt-speed');
         },
+        changeOrientation: function (newOrientation, oldOrientation) {
+            changeSetting(newOrientation, oldOrientation, 'orientation');
+        },
+        flip: function (newRotation, oldRotation) {
+            changeSetting(newRotation, oldRotation, 'flip');
+        },
+        setInfraRedLightOn: function (newValue, oldValue) {
+            newValue = newValue === true ? 'on' : 'false';
+            oldValue = oldValue === true ? 'on' : 'false';
+            changeSetting(newValue, oldValue, 'infra-red-light-on');
+        },
         move: function (directionName, duration) {
             $http.post('/api/camera/' + $scope.selectedCamera + '/control/move/' + directionName);
         },
@@ -113,7 +124,8 @@ var FotiloCameraController = function ($scope, $http, $stateParams) {
             'camera.settings.resolution': $scope.cameraService.changeResolution,
             'camera.settings.frameRate': $scope.cameraService.changeFrameRate,
             'camera.settings.contrast': $scope.cameraService.changeContrast,
-            'camera.settings.panTiltSpeed': $scope.cameraService.changePanTiltSpeed
+            'camera.settings.panTiltSpeed': $scope.cameraService.changePanTiltSpeed,
+            'camera.settings.infrRedCutEnabled': $scope.cameraService.setInfraRedLightOn
         }
         jQuery.each(propertiesToWatch, function (propertyToWatch, watchFunction) {
             $scope.$watch(propertyToWatch, watchFunction, true);
@@ -127,5 +139,13 @@ var FotiloCameraController = function ($scope, $http, $stateParams) {
         } else {
             $scope.cameraService.move(direction.name, duration);
         }
+    }
+
+    $scope.flip = function(rotation) {
+        $scope.cameraService.flip(rotation);
+    }
+
+    $scope.orientation = function(orientation) {
+        $scope.cameraService.changeOrientation(orientation);
     }
 }

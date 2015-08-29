@@ -1,8 +1,7 @@
 package net.xylophones.fotilo.web.controllers;
 
 import net.xylophones.fotilo.CameraControl;
-import net.xylophones.fotilo.common.CameraOverview;
-import net.xylophones.fotilo.common.Direction;
+import net.xylophones.fotilo.common.*;
 import net.xylophones.fotilo.web.CameraConnectionFactory;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.InputStreamEntity;
@@ -77,6 +76,24 @@ public class CameraController {
     @RequestMapping("/{cameraId}/control/stop")
     public String stop(@PathVariable("cameraId") String cameraId) throws IOException {
         getCameraConnection(cameraId).stopMovement();
+        return "OK";
+    }
+
+    @RequestMapping(value="/{cameraId}/settings/flip/{rotation}", method = RequestMethod.POST)
+    public String flip(@PathVariable("cameraId") String cameraId, @PathVariable("rotation") String rotation) throws IOException {
+        getCameraConnection(cameraId).flip(Rotation.fromString(rotation));
+        return "OK";
+    }
+
+    @RequestMapping(value="/{cameraId}/settings/orientation/{orientation}", method = RequestMethod.POST)
+    public String setOrientation(@PathVariable("cameraId") String cameraId, @PathVariable("orientation") String orientation) throws IOException {
+        getCameraConnection(cameraId).oritentation(Orientation.fromString(orientation));
+        return "OK";
+    }
+
+    @RequestMapping(value="/{cameraId}/settings/infra-red-light-on/{onOrOff}", method = RequestMethod.POST)
+    public String setInfraRedLightOnOrOff(@PathVariable("cameraId") String cameraId, @PathVariable("onOrOff") String onOrOff) throws IOException {
+        getCameraConnection(cameraId).setInfraRedLightOn(OnOrOff.fromString(onOrOff).asBoolean());
         return "OK";
     }
 

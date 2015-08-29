@@ -16,7 +16,6 @@ import org.apache.http.impl.client.HttpClients;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -206,6 +205,11 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
     }
 
     @Override
+    public void oritentation(Orientation orientation) throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void saveSnapshot(Path path) throws IOException {
         String snapshotUrl = String.format(SNAPSHOT_URL, cameraInfo.getHost(), cameraInfo.getPort());
         HttpGet httpget = new HttpGet(snapshotUrl);
@@ -266,6 +270,7 @@ public class JPT3815WCameraControl implements CameraControl, AutoCloseable {
         cameraDefinition.setLocationRange(new SettingsRange(1, 10));
         cameraDefinition.setPanTiltSpeedRange(new SettingsRange(1, 10));
         cameraDefinition.setSupportsInfraRedCut(false);
+        cameraDefinition.setOrientationControlType(OrientationControlType.VERTICAL_AND_HORIZONTAL_FLIP);
 
         List<String> resolutions = new ArrayList<>();
         resolutions.add("160x120");

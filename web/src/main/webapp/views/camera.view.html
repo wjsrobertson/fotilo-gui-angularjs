@@ -20,6 +20,8 @@
       </select>
     </div>
 
+    <hr/>
+
     <div>
       <div class="form-group">
         <label>Speed</label>
@@ -61,6 +63,34 @@
         <div ui-slider min="{{camera.definition.frameRateRange.min}}" max="{{camera.definition.frameRateRange.max}}"
              ng-model="camera.settings.frameRate"></div>
       </div>
+
+      <hr/>
+
+      <div ng-if="camera.definition.orientationControlType == 'VERTICAL_AND_HORIZONTAL_FLIP'" class="form-group">
+        <button ng-click="flip('vertical')" class="btn btn-lg">↕</button>
+        <button ng-click="flip('horizontal')" class="btn btn-lg">↔</button>
+      </div>
+
+      <div ng-if="camera.definition.orientationControlType == 'EXPLICIT'" class="form-group">
+        <label>Orientation</label>
+
+        <div>
+          <button ng-click="orientation('normal')" class="btn btn-lg">Normal</button>
+          <button ng-click="orientation('flip')" class="btn btn-lg">Flip</button>
+          <button ng-click="orientation('mirror')" class="btn btn-lg">Mirror</button>
+          <button ng-click="orientation('flip_and_mirror')" class="btn btn-lg">Flip &amp; Mirror</button>
+        </div>
+      </div>
+
+      <hr/>
+
+      <div ng-if="camera.definition.supportsInfraRedCut == true" class="form-group">
+        <label>IR Cut</label> <input value="on" type="checkbox" class="checkbox"
+                                     ng-model="camera.settings.infrRedCutEnabled"/>
+      </div>
+
+      <hr/>
+
     </div>
   </div>
 

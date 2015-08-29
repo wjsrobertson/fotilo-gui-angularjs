@@ -168,7 +168,7 @@ public class JPT3815W2CameraControl implements CameraControl, AutoCloseable {
 
     @Override
     public void flip(Rotation rotation) throws IOException {
-        if (Rotation.HORIZONTAL.equals(rotation)) {
+        if (Rotation.VERTICAL.equals(rotation)) {
             executeCommand(COMMAND_ROTATION, VALUE_ROTATION_VERTICAL);
         } else if (Rotation.HORIZONTAL.equals(rotation)) {
             executeCommand(COMMAND_ROTATION, VALUE_ROTATION_HORIZONTAL);
@@ -197,6 +197,11 @@ public class JPT3815W2CameraControl implements CameraControl, AutoCloseable {
 
     @Override
     public void setInfraRedLightOn(boolean on) throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void oritentation(Orientation orientation) throws IOException {
         throw new UnsupportedOperationException();
     }
 

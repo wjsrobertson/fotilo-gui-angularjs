@@ -1,6 +1,7 @@
 package net.xylophones.fotilo.io;
 
 import net.xylophones.fotilo.common.CameraDefinition;
+import net.xylophones.fotilo.common.OrientationControlType;
 import net.xylophones.fotilo.common.SettingsRange;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class JPT3815W2DefinitionProvider implements CameraDefinitionProvider {
         cameraDefinition.setLocationRange(new SettingsRange(1, 10));
         cameraDefinition.setPanTiltSpeedRange(new SettingsRange(0, 10));
         cameraDefinition.setSupportsInfraRedCut(false);
+        cameraDefinition.setOrientationControlType(OrientationControlType.VERTICAL_AND_HORIZONTAL_FLIP);
 
         List<String> resolutions = new ArrayList<>();
         resolutions.add("160x120");
