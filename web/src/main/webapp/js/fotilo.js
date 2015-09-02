@@ -1,4 +1,4 @@
-var fotiloApp = angular.module('fotiloApp', ['ui.router', 'ui.slider']);
+var fotiloApp = angular.module('fotiloApp', ['ui.router', 'ui.slider', 'ui.bootstrap', 'ngCookies']);
 
 var fotiloRouteConfig = function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/cameras");
@@ -111,11 +111,25 @@ var DIRECTIONS = Object.freeze([
     {name: "down", symbol: '↓'}
 ]);
 
-var FotiloCameraController = function ($scope, $http, $stateParams) {
+var FotiloCameraController = function ($scope, $http, $stateParams, $cookies) {
     $scope.directions = DIRECTIONS;
     $scope.selectedCamera = $stateParams.cameraId;
     $scope.cameraService = CameraService($http, $scope);
+
+
     $scope.stepMoveDuration = 1;
+    if ($cookies.get('stepMoveDuration')) {
+        $scope.stepMoveDuration = parseInt($cookies.get('stepMoveDuration'));
+    }
+
+    var changeStepMoveDuration = function(newStepMoveDuration, oldStepMoveDuration) {
+        console.log("step move duration: " + newStepMoveDuration);
+        if ($scope.stepMoveDuration != newStepMoveDuration) {
+            $cookies.put('stepMoveDuration', newStepMoveDuration);
+        }
+    }
+
+    //$scope.$watch('stepMoveDuration', changeStepMoveDuration, true);
 
     $http.get('/api/cameras').success(function (data, status, headers, config) {
         $scope.cameras = data;
@@ -130,7 +144,8 @@ var FotiloCameraController = function ($scope, $http, $stateParams) {
             'camera.settings.frameRate': $scope.cameraService.changeFrameRate,
             'camera.settings.contrast': $scope.cameraService.changeContrast,
             'camera.settings.panTiltSpeed': $scope.cameraService.changePanTiltSpeed,
-            'camera.settings.infrRedCutEnabled': $scope.cameraService.setInfraRedLightOn
+            'camera.settings.infrRedCutEnabled': $scope.cameraService.setInfraRedLightOn,
+            'stepMoveDuration': changeStepMoveDuration
         }
         jQuery.each(propertiesToWatch, function (propertyToWatch, watchFunction) {
             $scope.$watch(propertyToWatch, watchFunction, true);

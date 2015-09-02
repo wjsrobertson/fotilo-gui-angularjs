@@ -1,121 +1,108 @@
 <div class="container-fluid row">
-
-  <!--
-  <h3>{{camera.definition.cameraManufacturer}} - {{camera.definition.cameraType}}</h3>
-  -->
-
-  <div class="">
+  <div>
     <img class="img-responsive img-rounded" src="/api/camera/{{selectedCamera}}/stream"/>
   </div>
 
-  <hr />
-
-  <div>
-    <div class="form-group">
+  <tabset class="fotilo-control-tabset">
+    <tab heading="Movement">
+      <div class="form-group">
         <span ng-repeat="direction in directions">
           <button ng-click="move($index)" class="btn btn-lg">{{direction.symbol}}</button>
         </span>
-    </div>
+      </div>
 
-    <hr/>
+      <hr/>
 
-    <div class="form-group">
+      <div class="form-group">
         <span ng-repeat="direction in directions">
           <button ng-click="move($index, stepMoveDuration)" class="btn btn-lg">{{direction.symbol}}</button>
         </span>
-    </div>
-
-    <div class="form-group">
-      <label>Step Move Duration</label>
-      <em>1 / <strong>{{stepMoveDuration}}</strong> / 20
-      </em>
-
-      <div ui-slider min="1" max="10" ng-model="stepMoveDuration"></div>
-    </div>
-
-  </div>
-
-  <hr>
-
-  <div class="form-group">
-    <label>Resolution</label>
-    <select ng-model="camera.settings.resolution" class="form-control">
-      <option ng-repeat="resolution in camera.definition.supportedResolutions">{{resolution}}</option>
-    </select>
-  </div>
-
-  <hr/>
-
-  <div>
-    <div class="form-group">
-      <label>Speed</label>
-      <em>{{camera.definition.panTiltSpeedRange.min}} / <strong>{{camera.settings.panTiltSpeed}}</strong> /
-        {{camera.definition.panTiltSpeedRange.max}}
-      </em>
-
-      <div ui-slider min="{{camera.definition.panTiltSpeedRange.min}}"
-           max="{{camera.definition.panTiltSpeedRange.max}}"
-           ng-model="camera.settings.panTiltSpeed"></div>
-    </div>
-
-    <div class="form-group">
-      <label>Brightness</label>
-      <em>{{camera.definition.brightnessRange.min}} / <strong>{{camera.settings.brightness}}</strong> /
-        {{camera.definition.brightnessRange.max}}
-      </em>
-
-      <div ui-slider min="{{camera.definition.brightnessRange.min}}" max="{{camera.definition.brightnessRange.max}}"
-           ng-model="camera.settings.brightness"></div>
-    </div>
-
-    <div class="form-group">
-      <label>Contrast</label>
-      <em>{{camera.definition.contrastRange.min}} / <strong>{{camera.settings.contrast}}</strong> /
-        {{camera.definition.contrastRange.max}}
-      </em>
-
-      <div ui-slider min="{{camera.definition.contrastRange.min}}" max="{{camera.definition.contrastRange.max}}"
-           ng-model="camera.settings.contrast"></div>
-    </div>
-
-    <div class="form-group">
-      <label>Image Frame Rate</label>
-      <em>{{camera.definition.frameRateRange.min}} / <strong>{{camera.settings.frameRate}}</strong> /
-        {{camera.definition.frameRateRange.max}}
-      </em>
-
-      <div ui-slider min="{{camera.definition.frameRateRange.min}}" max="{{camera.definition.frameRateRange.max}}"
-           ng-model="camera.settings.frameRate"></div>
-    </div>
-
-    <hr/>
-
-    <div ng-if="camera.definition.orientationControlType == 'VERTICAL_AND_HORIZONTAL_FLIP'" class="form-group">
-      <button ng-click="flip('vertical')" class="btn btn-lg">↕</button>
-      <button ng-click="flip('horizontal')" class="btn btn-lg">↔</button>
-    </div>
-
-    <div ng-if="camera.definition.orientationControlType == 'EXPLICIT'" class="form-group">
-      <label>Orientation</label>
-
-      <div>
-        <button ng- ng-click="orientation('normal')" class="btn btn-lg">Normal</button>
-        <button ng-click="orientation('flip')" class="btn btn-lg">Flip</button>
-        <button ng-click="orientation('mirror')" class="btn btn-lg">Mirror</button>
-        <button ng-click="orientation('flip_and_mirror')" class="btn btn-lg">Flip &amp; Mirror</button>
       </div>
-    </div>
 
-    <hr/>
+      <div class="form-group">
+        <label>Step Move Duration</label>
+        <em>1 / <strong>{{stepMoveDuration}}</strong> / 10</em>
 
-    <div ng-if="camera.definition.supportsInfraRedCut == true" class="form-group">
-      <label>IR Cut</label> <input value="on" type="checkbox" class="checkbox"
-                                   ng-model="camera.settings.infrRedCutEnabled"/>
-    </div>
+        <div ui-slider min="1" max="10" ng-model="stepMoveDuration"></div>
+      </div>
 
-    <hr/>
+      <div class="form-group">
+        <label>Speed</label>
+        <em>{{camera.definition.panTiltSpeedRange.min}} / <strong>{{camera.settings.panTiltSpeed}}</strong> /
+          {{camera.definition.panTiltSpeedRange.max}}
+        </em>
 
-  </div>
-</div>
+        <div ui-slider min="{{camera.definition.panTiltSpeedRange.min}}"
+             max="{{camera.definition.panTiltSpeedRange.max}}"
+             ng-model="camera.settings.panTiltSpeed"></div>
+      </div>
+    </tab>
+
+    <tab heading="Image">
+
+      <div class="form-group">
+        <label>Resolution</label>
+        <select ng-model="camera.settings.resolution" class="form-control">
+          <option ng-repeat="resolution in camera.definition.supportedResolutions">{{resolution}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Brightness</label>
+        <em>{{camera.definition.brightnessRange.min}} / <strong>{{camera.settings.brightness}}</strong> /
+          {{camera.definition.brightnessRange.max}}
+        </em>
+
+        <div ui-slider min="{{camera.definition.brightnessRange.min}}" max="{{camera.definition.brightnessRange.max}}"
+             ng-model="camera.settings.brightness"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Contrast</label>
+        <em>{{camera.definition.contrastRange.min}} / <strong>{{camera.settings.contrast}}</strong> /
+          {{camera.definition.contrastRange.max}}
+        </em>
+
+        <div ui-slider min="{{camera.definition.contrastRange.min}}" max="{{camera.definition.contrastRange.max}}"
+             ng-model="camera.settings.contrast"></div>
+      </div>
+
+
+      <div class="form-group">
+        <label>Image Frame Rate</label>
+        <em>{{camera.definition.frameRateRange.min}} / <strong>{{camera.settings.frameRate}}</strong> /
+          {{camera.definition.frameRateRange.max}}
+        </em>
+
+        <div ui-slider min="{{camera.definition.frameRateRange.min}}" max="{{camera.definition.frameRateRange.max}}"
+             ng-model="camera.settings.frameRate"></div>
+      </div>
+
+      <div ng-if="camera.definition.orientationControlType == 'VERTICAL_AND_HORIZONTAL_FLIP'" class="form-group">
+        <button ng-click="flip('vertical')" class="btn btn-lg">↕</button>
+        <button ng-click="flip('horizontal')" class="btn btn-lg">↔</button>
+      </div>
+
+      <div ng-if="camera.definition.orientationControlType == 'EXPLICIT'" class="form-group">
+        <label>Orientation</label>
+
+        <div>
+          <button ng- ng-click="orientation('normal')" class="btn btn-lg">Normal</button>
+          <button ng-click="orientation('flip')" class="btn btn-lg">Flip</button>
+          <button ng-click="orientation('mirror')" class="btn btn-lg">Mirror</button>
+          <button ng-click="orientation('flip_and_mirror')" class="btn btn-lg">Flip &amp; Mirror</button>
+        </div>
+      </div>
+    </tab>
+
+    <tab heading="IR Light" ng-if="camera.definition.supportsInfraRedCut == true">
+      <div class="form-group">
+        <label>
+          IR light on
+          <input class="checkbox" type="checkbox" ng-model="camera.settings.infrRedCutEnabled"/>
+        </label>
+      </div>
+    </tab>
+  </tabset>
 
 </div>
