@@ -47,6 +47,13 @@ var CameraService = function ($http, $scope) {
             return;
         }
 
+        function changeSettingIfValueHasntChanged(settingName, newValue) {
+            if (newValue === settingsChangeLog[settingName]) {
+                var settingUrlPathPart = settingName;
+                $http.post('/api/camera/' + $scope.selectedCamera + '/settings/' + settingUrlPathPart + '/' + newValue);
+            }
+        }
+
         settingsChangeLog[settingName] = newValue;
         setTimeout(
             function () {
@@ -54,13 +61,6 @@ var CameraService = function ($http, $scope) {
             }
             , timeToWaitBeforeChangingSettingMs
         );
-    }
-
-    function changeSettingIfValueHasntChanged(settingName, newValue) {
-        if (newValue === settingsChangeLog[settingName]) {
-            var settingUrlPathPart = settingName;
-            $http.post('/api/camera/' + $scope.selectedCamera + '/settings/' + settingUrlPathPart + '/' + newValue);
-        }
     }
 
     return {
@@ -103,33 +103,29 @@ var CameraService = function ($http, $scope) {
     };
 }
 
-var DIRECTIONS = Object.freeze([
-    {name: "left", symbol: '←'},
-    {name: "right", symbol: '→'},
-    {name: "stop", symbol: 'stop'},
-    {name: "up", symbol: '↑'},
-    {name: "down", symbol: '↓'}
-]);
-
 var FotiloCameraController = function ($scope, $http, $stateParams, $cookies) {
-    $scope.directions = DIRECTIONS;
     $scope.selectedCamera = $stateParams.cameraId;
     $scope.cameraService = CameraService($http, $scope);
-
-
-    $scope.stepMoveDuration = 1;
-    if ($cookies.get('stepMoveDuration')) {
-        $scope.stepMoveDuration = parseInt($cookies.get('stepMoveDuration'));
+    $scope.volatileValues = {
+        incrementalMovement: false,
+        stepMoveDuration: 1
     }
 
-    var changeStepMoveDuration = function(newStepMoveDuration, oldStepMoveDuration) {
+    if (typeof $cookies.get('incrementalMovement') !== 'undefined') {
+        $scope.volatileValues.incrementalMovement = ('true' === $cookies.get('incrementalMovement'));
+    }
+    $scope.$watch('volatileValues.incrementalMovement', function (newincrementalMovementValue, oldValue) {
+        console.log("incremental movement: " + newincrementalMovementValue);
+        $cookies.put('incrementalMovement', String(newincrementalMovementValue));
+    });
+
+    if (typeof $cookies.get('stepMoveDuration') !== 'undefined') {
+        $scope.volatileValues.stepMoveDuration = parseInt($cookies.get('stepMoveDuration'));
+    }
+    $scope.$watch('volatileValues.stepMoveDuration', function (newStepMoveDuration, oldValue) {
         console.log("step move duration: " + newStepMoveDuration);
-        if ($scope.stepMoveDuration != newStepMoveDuration) {
-            $cookies.put('stepMoveDuration', newStepMoveDuration);
-        }
-    }
-
-    //$scope.$watch('stepMoveDuration', changeStepMoveDuration, true);
+        $cookies.put('stepMoveDuration', String(newStepMoveDuration));
+    });
 
     $http.get('/api/cameras').success(function (data, status, headers, config) {
         $scope.cameras = data;
@@ -144,20 +140,19 @@ var FotiloCameraController = function ($scope, $http, $stateParams, $cookies) {
             'camera.settings.frameRate': $scope.cameraService.changeFrameRate,
             'camera.settings.contrast': $scope.cameraService.changeContrast,
             'camera.settings.panTiltSpeed': $scope.cameraService.changePanTiltSpeed,
-            'camera.settings.infrRedCutEnabled': $scope.cameraService.setInfraRedLightOn,
-            'stepMoveDuration': changeStepMoveDuration
+            'camera.settings.infrRedCutEnabled': $scope.cameraService.setInfraRedLightOn
         }
-        jQuery.each(propertiesToWatch, function (propertyToWatch, watchFunction) {
+
+        $.each(propertiesToWatch, function (propertyToWatch, watchFunction) {
             $scope.$watch(propertyToWatch, watchFunction, true);
         });
     });
 
-    $scope.move = function (directionIndex, duration) {
-        var direction = $scope.directions[directionIndex];
-        if (direction.name === 'stop') {
+    $scope.move = function (direction, duration) {
+        if (direction === 'stop') {
             $scope.cameraService.stop();
         } else {
-            $scope.cameraService.move(direction.name, duration);
+            $scope.cameraService.move(direction, duration);
         }
     }
 

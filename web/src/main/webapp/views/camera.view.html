@@ -6,24 +6,26 @@
   <tabset class="fotilo-control-tabset">
     <tab heading="Movement">
       <div class="form-group">
-        <span ng-repeat="direction in directions">
-          <button ng-click="move($index)" class="btn btn-lg">{{direction.symbol}}</button>
-        </span>
+        <button ng-click="move('left', volatileValues.stepMoveDuration)" class="btn btn-lg">←</button>
+        <button ng-click="move('right', volatileValues.stepMoveDuration)" class="btn btn-lg">→</button>
+        <button ng-click="move('stop', volatileValues.stepMoveDuration)" class="btn btn-lg">stop</button>
+        <button ng-click="move('up', volatileValues.stepMoveDuration)" class="btn btn-lg">↑</button>
+        <button ng-click="move('down', volatileValues.stepMoveDuration)" class="btn btn-lg">↓</button>
       </div>
 
-      <hr/>
-
-      <div class="form-group">
-        <span ng-repeat="direction in directions">
-          <button ng-click="move($index, stepMoveDuration)" class="btn btn-lg">{{direction.symbol}}</button>
-        </span>
+      <div class=" form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="volatileValues.incrementalMovement"/>Move in steps
+          </label>
+        </div>
       </div>
 
       <div class="form-group">
-        <label>Step Move Duration</label>
-        <em>1 / <strong>{{stepMoveDuration}}</strong> / 10</em>
+        <label>Step Move Duration (seconds)</label>
+        <em>1 / <strong>{{volatileValues.stepMoveDuration}}</strong> / 10</em>
 
-        <div ui-slider min="1" max="10" ng-model="stepMoveDuration"></div>
+        <div ui-slider min="1" max="10" ng-model="volatileValues.stepMoveDuration"></div>
       </div>
 
       <div class="form-group">
@@ -79,8 +81,12 @@
       </div>
 
       <div ng-if="camera.definition.orientationControlType == 'VERTICAL_AND_HORIZONTAL_FLIP'" class="form-group">
-        <button ng-click="flip('vertical')" class="btn btn-lg">↕</button>
-        <button ng-click="flip('horizontal')" class="btn btn-lg">↔</button>
+        <label>Orientation</label>
+
+        <div>
+          <button ng-click="flip('vertical')" class="btn btn-lg">↕</button>
+          <button ng-click="flip('horizontal')" class="btn btn-lg">↔</button>
+        </div>
       </div>
 
       <div ng-if="camera.definition.orientationControlType == 'EXPLICIT'" class="form-group">

@@ -1,6 +1,7 @@
 package net.xylophones.fotilo.io;
 
 import net.xylophones.fotilo.CameraControl;
+import net.xylophones.fotilo.ScheduledCameraMovementStopper;
 import net.xylophones.fotilo.common.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.auth.AuthScope;
@@ -63,6 +64,9 @@ public class TR3818CameraControl implements CameraControl, AutoCloseable {
     private final String user;
     private final String pass;
 
+    // TODO - dependency injection
+    private final ScheduledCameraMovementStopper stopper = new ScheduledCameraMovementStopper();
+
     private TR3818DefinitionProvider definitionProvider = new TR3818DefinitionProvider();
 
     private TR3818SettingsPageParser settingsPageParser = new TR3818SettingsPageParser();
@@ -97,7 +101,8 @@ public class TR3818CameraControl implements CameraControl, AutoCloseable {
 
     @Override
     public void move(Direction direction, int duration) throws IOException {
-        throw new UnsupportedOperationException();
+        move(direction);
+        stopper.stopMovementAfterTime(this, duration);
     }
 
     public boolean stopMovement() throws IOException {
