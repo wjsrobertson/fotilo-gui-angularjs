@@ -11,7 +11,7 @@
     </parent>
 
     <properties>
-        <shaded.jar.name>fotilo-nodeps-${version}</shaded.jar.name>
+        <shaded.jar.name>fotilo-nodeps-${project.version}</shaded.jar.name>
         <spring.version>4.0.6.RELEASE</spring.version>
     </properties>
 
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>net.xylophones</groupId>
             <artifactId>fotilo-lib</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-cli</groupId>

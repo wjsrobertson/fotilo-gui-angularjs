@@ -1,6 +1,6 @@
 package net.xylophones.fotilo.web.model;
 
-import javafx.scene.Camera;
+//import javafx.scene.Camera;
 
 import java.io.Serializable;
 import java.util.List;

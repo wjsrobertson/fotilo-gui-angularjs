@@ -1,5 +1,6 @@
 package net.xylophones.fotilo;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -17,9 +18,15 @@ public class ScheduledCameraMovementStopper {
         }
 
         scheduler.schedule(
-                () -> {
-                    cameraControl.stopMovement();
-                    return null;
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            cameraControl.stopMovement();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 , seconds, TimeUnit.SECONDS);
     }
