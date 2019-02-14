@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
 
-    <artifactId>fotilo</artifactId>
+    <artifactId>fotilo-java</artifactId>
     <groupId>net.xylophones</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
