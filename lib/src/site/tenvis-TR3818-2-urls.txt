@@ -1,7 +1,0 @@
-http://192.168.1.7/get_status.cgi
-http://192.168.1.7/get_params.cgi
-
-get_misc.cgi - does not work!!
-
--- has config values
-http://192.168.1.7/alarm_cfg.asp
